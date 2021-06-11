@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+  background: #f3f3f3;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .navbar {
+    background: #d5525f;
+    position: fixed;
+    width: 100%;
+    color: #fff;
+    padding: 10px 0;
+
+    .MuiTabs-flexContainer {
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  #main {
+    margin-top: 70px;
+  }
+}
+
