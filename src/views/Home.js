@@ -13,7 +13,7 @@ export default function Home() {
                         <h1>Welcome in timesheet app</h1>
                         <hr />
                         <h2>Please insert your work data:</h2>
-                        <CustomInput />
+                        <CustomInput inputs={["Project name", "Hours", "Pages", "Other stuff"]} />
                     </Paper>
                 </Grid>
             </Grid>

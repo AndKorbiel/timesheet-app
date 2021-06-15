@@ -1,7 +1,7 @@
 import { ADD_NEW_PROJECT } from "./types";
 
 const initialState = {
-    projectsList: ['3dsada', 2, 3]
+    projectsList: [{id: 1, title: "Test Project"}, {id: 2, title: "Second project"}]
 }
 
 export default function MainReducer(state = initialState, action) {
@@ -11,7 +11,7 @@ export default function MainReducer(state = initialState, action) {
                 ...state,
                 projectsList: [
                     ...state.projectsList,
-                    action.payload
+                    {id: 3, title: action.payload}
                 ]
             }
         default:
