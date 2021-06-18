@@ -1,23 +1,72 @@
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import React from 'react';
+import { connect } from "react-redux";
+import {addNewProject} from "../redux/actions";
+import CustomInputDisplay from "./CustomInputDisplay";
+import Button from "@material-ui/core/Button";
 
-export default function CustomInput(props) {
-    return (
-        <form autoComplete={"off"}>
-            {props.inputs.map(el => {
-                return (
-                    <TextField
-                        variant={"outlined"}
-                        helperText={el.validation ? "Incorrect entry" : ''}
-                        error={el.validation}
-                        label={el.name}
-                        key={el.name}
-                        onChange={(e)=> props.actionOnChange(e)} />
-                )}
-            )}
-            <Button variant="contained" color="primary" onClick={props.actionOnSubmit}>
-                Submit
-            </Button>
-        </form>
-    )
+class CustomInput extends React.Component {
+    state = {
+        isValidated: true
+    }
+
+    handleChange = e => {
+        setTimeout(() => {
+            this.setState({
+                [e.target.name]: {name: e.target.name, value: e.target.value}
+            })
+            this.validateRequired()
+        }, 200)
+    }
+
+    validateRequired = () => {
+        let val = false;
+        if (this.state.hasOwnProperty(this.props.validation)) {
+            if (this.state[this.props.validation].value.length > 2) {
+                val = true;
+            }
+        }
+        this.setState({
+            isValidated: val
+        })
+
+        return val
+    }
+
+    handleSubmit = () => {
+       if (this.validateRequired()) {
+           const output = {}
+           this.props.inputs.forEach(el => {
+               output[[el.name]] = this.state[el.name].value
+           })
+           this.props.addNewProject(output)
+       }
+    }
+
+    render() {
+        return (
+            <form autoComplete={"off"}>
+                {this.props.inputs.map(el => {
+                    return (
+                        <CustomInputDisplay
+                            input={el}
+                            validation={this.state.isValidated}
+                            key={el.name}
+                            actionOnChange={this.handleChange}
+                        />
+                    )
+                })}
+                <Button variant="contained" color="primary" onClick={this.handleSubmit}>
+                    Submit
+                </Button>
+            </form>
+        )
+    }
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addNewProject: project => dispatch(addNewProject(project))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(CustomInput);
