@@ -1,4 +1,4 @@
-import { ADD_NEW_PROJECT } from "./types";
+import {ADD_INITIAL_DATA, ADD_NEW_PROJECT} from "./types";
 
 const initialState = {
     projectsList: [{id: 1, title: "Test Project", desc: "adsad ss"}, {id: 2, title: "Second project"}]
@@ -13,6 +13,11 @@ export default function MainReducer(state = initialState, action) {
                     ...state.projectsList,
                     action.payload
                 ]
+            }
+        case ADD_INITIAL_DATA:
+            return {
+                ...state,
+                projectsList: action.payload.projectsList
             }
         default:
             return state

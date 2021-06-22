@@ -1,1 +1,0 @@
-export const ADD_NEW_PROJECT = 'ADD_NEW_PROJECT';
