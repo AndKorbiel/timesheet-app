@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import {addNewProject} from "../redux/actions";
+import {addNewProjectEffect} from "../redux/effects";
 import CustomInputDisplay from "./CustomInputDisplay";
 import Button from "@material-ui/core/Button";
 
@@ -65,7 +65,7 @@ class CustomInput extends React.Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addNewProject: project => dispatch(addNewProject(project))
+        addNewProject: project => dispatch(addNewProjectEffect(project))
     }
 }
 

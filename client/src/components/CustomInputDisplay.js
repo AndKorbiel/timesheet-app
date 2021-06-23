@@ -20,14 +20,13 @@ export default function CustomInputDisplay(props) {
             }
             {props.input.type === 'select' &&
             <FormControl variant="outlined">
-                <InputLabel id="demo-simple-select-outlined-label">Age</InputLabel>
+                <InputLabel>Age</InputLabel>
                 <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
                     value={props.input.data}
                     onChange={(e) => props.actionOnChange(e)}
                     label="Age"
                     name={props.input.name}
+                    key={props.input.name}
                 >
                     <MenuItem value="">
                         <em>None</em>

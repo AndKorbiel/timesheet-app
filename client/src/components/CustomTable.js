@@ -6,6 +6,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from "@material-ui/core/Button";
+import React from "react";
 
 export default function CustomTable(props) {
     return (
@@ -29,6 +31,14 @@ export default function CustomTable(props) {
                                 </TableCell>
                                 <TableCell>{el.title}</TableCell>
                                 <TableCell>{el.description}</TableCell>
+                                <TableCell>
+                                    <Button variant="contained">
+                                        Edit
+                                    </Button>
+                                    <Button variant="contained" color="secondary" onClick={() => props.action(el)}>
+                                        Remove
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         )
                     })}

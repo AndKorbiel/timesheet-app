@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import CustomInput from "../components/CustomInput";
 import CustomTable from "../components/CustomTable";
 import { useEffect } from "react";
-import {getAllProjectsEffect} from '../redux/effects';
+import {getAllProjectsEffect, removeProjectEffect} from '../redux/effects';
 
 // Material UI
 import Container from "@material-ui/core/Container";
@@ -22,11 +22,17 @@ function ProjectsList(props) {
                         <CustomInput
                             inputs={[
                                 {label: "Project name", name: 'title', required: true, validation: true, type: 'input'},
-                                {label: "Description", name: 'desc', required: false, validation: false, type: 'input'}
+                                {label: "Description", name: 'description', required: false, validation: false, type: 'input'}
                             ]}
                             validation="title"
                         />
-                        {props.projectsList && <CustomTable columns={["id", "Name", "Description"]} list={props.projectsList} />}
+                        {props.projectsList &&
+                            <CustomTable
+                                columns={["id", "Name", "Description", "Edit"]}
+                                list={props.projectsList}
+                                action={props.removeProject}
+                            />
+                        }
                     </Paper>
                 </Grid>
             </Grid>
@@ -42,7 +48,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getData: () => dispatch(getAllProjectsEffect())
+        getData: () => dispatch(getAllProjectsEffect()),
+        removeProject: project => dispatch(removeProjectEffect(project))
     }
 }
 
