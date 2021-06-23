@@ -11,7 +11,6 @@ import Paper from "@material-ui/core/Paper";
 
 function ProjectsList(props) {
     useEffect(()=>{
-        console.log(props.projectsList)
         props.getData()
     }, [])
     return (
@@ -27,7 +26,7 @@ function ProjectsList(props) {
                             ]}
                             validation="title"
                         />
-                        <CustomTable columns={["id", "Name", "Description"]} list={props.projectsList} />
+                        {props.projectsList && <CustomTable columns={["id", "Name", "Description"]} list={props.projectsList} />}
                     </Paper>
                 </Grid>
             </Grid>

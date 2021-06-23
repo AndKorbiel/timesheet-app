@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
-const data = require('../data');
+const Project = require('../models/project.model');
 
 app.get('/getAll', (req, res) => {
-    res.json(data)
+    Project.find((err, projects) => {
+        if (err) {
+            res.send('Error while getting data from database')
+        } else {
+            res.send(projects)
+        }
+    })
 })
 
 module.exports = app;

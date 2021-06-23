@@ -28,7 +28,7 @@ export default function CustomTable(props) {
                                     {index + 1}
                                 </TableCell>
                                 <TableCell>{el.title}</TableCell>
-                                <TableCell>{el.desc}</TableCell>
+                                <TableCell>{el.description}</TableCell>
                             </TableRow>
                         )
                     })}

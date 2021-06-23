@@ -7,6 +7,8 @@ import Container from "@material-ui/core/Container";
 import CustomInput from "../components/CustomInput";
 
 function Home(props) {
+    const projectsList = props.projectsList ? props.projectsList : [];
+
     return (
         <Container fixed id="main">
             <Grid container spacing={3}>
@@ -16,7 +18,7 @@ function Home(props) {
                         <hr />
                         <h2>Please insert your work data:</h2>
                         <CustomInput inputs={[
-                            {label: "Project name", name: 'title', required: true, validation: true, type: 'select', data: props.projectsList},
+                            {label: "Project name", name: 'title', required: true, validation: true, type: 'select', data: projectsList},
                             {label: "Time", name: 'time', required: true, validation: true, type: 'input'},
                             {label: "Pages", name: 'pages', required: true, validation: true, type: 'input'},
                             {label: "Other", name: 'other', required: true, validation: true, type: 'input'},
