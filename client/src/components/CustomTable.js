@@ -32,10 +32,10 @@ export default function CustomTable(props) {
                                 <TableCell>{el.title}</TableCell>
                                 <TableCell>{el.description}</TableCell>
                                 <TableCell>
-                                    <Button variant="contained">
-                                        Edit
+                                    <Button variant="contained" onClick={() => props.handleEdit(el)}>
+                                        {props.editing ? 'Cancel' : 'Edit'}
                                     </Button>
-                                    <Button variant="contained" color="secondary" onClick={() => props.action(el)}>
+                                    <Button variant="contained" color="secondary" onClick={() => props.handleRemove(el)}>
                                         Remove
                                     </Button>
                                 </TableCell>

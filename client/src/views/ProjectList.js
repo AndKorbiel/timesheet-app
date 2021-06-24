@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import CustomInput from "../components/CustomInput";
 import CustomTable from "../components/CustomTable";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {getAllProjectsEffect, removeProjectEffect} from '../redux/effects';
 
 // Material UI
@@ -12,7 +12,16 @@ import Paper from "@material-ui/core/Paper";
 function ProjectsList(props) {
     useEffect(()=>{
         props.getData()
-    }, [])
+    }, []);
+
+    const [editing, setEdit] = useState(false);
+    const [temp, setTemp] = useState({})
+
+    const handleEdit = element => {
+        setEdit(!editing)
+        setTemp(element)
+    }
+
     return (
         <Container fixed id="main">
             <Grid container spacing={3}>
@@ -21,16 +30,20 @@ function ProjectsList(props) {
                         <h1>Projects list</h1>
                         <CustomInput
                             inputs={[
-                                {label: "Project name", name: 'title', required: true, validation: true, type: 'input'},
-                                {label: "Description", name: 'description', required: false, validation: false, type: 'input'}
+                                {label: "Project name", name: 'title', required: true, validation: true, type: 'input', value: temp.title},
+                                {label: "Description", name: 'description', required: false, validation: false, type: 'input', value: temp.description}
                             ]}
                             validation="title"
+                            editing={editing}
+                            temp={temp}
                         />
                         {props.projectsList &&
                             <CustomTable
                                 columns={["id", "Name", "Description", "Edit"]}
                                 list={props.projectsList}
-                                action={props.removeProject}
+                                handleRemove={props.removeProject}
+                                handleEdit={handleEdit}
+                                editing={editing}
                             />
                         }
                     </Paper>

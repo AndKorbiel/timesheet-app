@@ -6,16 +6,45 @@ import Button from "@material-ui/core/Button";
 
 class CustomInput extends React.Component {
     state = {
-        isValidated: true
+        isValidated: true,
+        temp: {}
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.editing !== this.props.editing && this.props.editing) {
+            setTimeout(() => {
+                this.setState({
+                    temp: {
+                        title: {name: 'title', value: this.props.temp.title},
+                        description: {name: 'description', value: this.props.temp.description},
+                    }
+                })
+            }, 200)
+        } else if (prevProps.editing !== this.props.editing && !this.props.editing) {
+            this.setState({
+                temp: {}
+            })
+        }
     }
 
     handleChange = e => {
-        setTimeout(() => {
-            this.setState({
+        let val = {}
+        if (this.props.editing) {
+            val = {
+                temp: {
+                    [e.target.name]: {name: e.target.name, value: e.target.value}
+                },
                 [e.target.name]: {name: e.target.name, value: e.target.value}
-            })
-            this.validateRequired()
-        }, 200)
+            }
+        } else {
+            val = {
+                [e.target.name]: {name: e.target.name, value: e.target.value}
+            }
+        }
+            setTimeout(() => {
+                this.setState(val)
+                this.validateRequired()
+            }, 200)
     }
 
     validateRequired = () => {
@@ -52,6 +81,8 @@ class CustomInput extends React.Component {
                             validation={this.state.isValidated}
                             key={el.name}
                             actionOnChange={this.handleChange}
+                            value={this.state.temp}
+                            isEditing={this.props.editing}
                         />
                     )
                 })}

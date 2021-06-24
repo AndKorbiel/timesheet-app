@@ -16,6 +16,8 @@ export default function CustomInputDisplay(props) {
                 label={props.input.label}
                 name={props.input.name}
                 key={props.input.name}
+                value={props.isEditing && props.value[props.input.name] ? props.value[props.input.name].value : props[props.input.name]}
+                defaultValue={props.isEditing && props.value[props.input.name] ? props.value[props.input.name].value : ''}
                 onChange={(e) => props.actionOnChange(e)}/>
             }
             {props.input.type === 'select' &&
