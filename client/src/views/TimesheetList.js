@@ -12,7 +12,7 @@ export default function TimeSheetList() {
                 <Grid item xs={12}>
                     <Paper>
                         <h1>Timesheets list</h1>
-                        <CustomTable columns={["id", "Name", "Description"]} list={testList} />
+                        <CustomTable columns={["id", "Name", "Description", "Edit"]} list={testList} />
                     </Paper>
                 </Grid>
             </Grid>

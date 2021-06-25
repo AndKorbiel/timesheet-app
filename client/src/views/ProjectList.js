@@ -1,8 +1,7 @@
 import { connect } from "react-redux";
-import CustomInput from "../components/CustomInput";
 import CustomTable from "../components/CustomTable";
 import { useEffect, useState } from "react";
-import {getAllProjectsEffect, removeProjectEffect} from '../redux/effects';
+import {updateProjectEffect, getAllProjectsEffect, removeProjectEffect} from '../redux/effects';
 
 // Material UI
 import Container from "@material-ui/core/Container";
@@ -18,6 +17,7 @@ function ProjectsList(props) {
     const [temp, setTemp] = useState({})
 
     const handleEdit = element => {
+        console.log(element)
         setEdit(!editing)
         setTemp(element)
     }
@@ -28,22 +28,15 @@ function ProjectsList(props) {
                 <Grid item xs={12}>
                     <Paper>
                         <h1>Projects list</h1>
-                        <CustomInput
-                            inputs={[
-                                {label: "Project name", name: 'title', required: true, validation: true, type: 'input', value: temp.title},
-                                {label: "Description", name: 'description', required: false, validation: false, type: 'input', value: temp.description}
-                            ]}
-                            validation="title"
-                            editing={editing}
-                            temp={temp}
-                        />
                         {props.projectsList &&
                             <CustomTable
                                 columns={["id", "Name", "Description", "Edit"]}
                                 list={props.projectsList}
                                 handleRemove={props.removeProject}
                                 handleEdit={handleEdit}
+                                handleUpdate={props.updateProject}
                                 editing={editing}
+                                temp={temp}
                             />
                         }
                     </Paper>
@@ -62,7 +55,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getData: () => dispatch(getAllProjectsEffect()),
-        removeProject: project => dispatch(removeProjectEffect(project))
+        removeProject: project => dispatch(removeProjectEffect(project)),
+        updateProject: project => dispatch(updateProjectEffect(project)),
     }
 }
 

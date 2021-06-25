@@ -1,4 +1,4 @@
-import { ADD_NEW_PROJECT, ADD_INITIAL_DATA, REMOVE_PROJECT_FROM_STORE } from "./types";
+import { ADD_NEW_PROJECT, ADD_INITIAL_DATA, REMOVE_PROJECT_FROM_STORE, UPDATE_PROJECT_IN_STORE } from "./types";
 
 export function addNewProject(project) {
     return {
@@ -17,6 +17,13 @@ export function addInitialData(payload) {
 export function removeProjectFromStore(project) {
     return {
         type: REMOVE_PROJECT_FROM_STORE,
+        payload: project
+    }
+}
+
+export function updateProjectInStore(project) {
+    return {
+        type: UPDATE_PROJECT_IN_STORE,
         payload: project
     }
 }

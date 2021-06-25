@@ -1,4 +1,4 @@
-import { addInitialData, addNewProject, removeProjectFromStore } from './actions';
+import { addInitialData, addNewProject, removeProjectFromStore, updateProjectInStore } from './actions';
 
 export const getAllProjectsEffect = () => {
     return dispatch => {
@@ -37,6 +37,24 @@ export const removeProjectEffect = project => {
             .then(res => res.json())
             .then(data => {
                 dispatch(removeProjectFromStore(data))
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+export const updateProjectEffect = project => {
+    return dispatch => {
+        fetch('/projects/update', {
+            method: "PUT",
+            body: JSON.stringify(project),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                dispatch(updateProjectInStore(data))
             })
             .catch(err => console.log(err))
     }

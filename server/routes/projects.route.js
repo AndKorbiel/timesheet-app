@@ -29,4 +29,20 @@ app.get('/remove', (req, res) => {
         .catch(err => res.status(500).send(err))
 })
 
+app.put('/update', (req, res) => {
+    const id = req.body._id;
+    const updatedProject = {
+        title: req.body.title,
+        description: req.body.description
+    }
+
+    Project.findOneAndUpdate({_id: id}, updatedProject, {new: true}, (err, result) =>{
+        if (err) {
+            res.status(500).json('Error: ' + err)
+        } else {
+            res.status(200).send(result)
+        }
+    })
+})
+
 module.exports = app;

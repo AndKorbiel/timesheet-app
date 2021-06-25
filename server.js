@@ -17,7 +17,7 @@ db.once('open', () => {
 
 // routes
 const projects = require('./server/routes/projects.route');
-app.use('/projects/', projects)
+app.use('/projects/', projects);
 
 app.listen(port, () => {
   console.log('App listening on port: ' + port)
