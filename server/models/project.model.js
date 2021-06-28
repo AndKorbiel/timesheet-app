@@ -9,6 +9,10 @@ const projectSchema = new Schema({
     description: {
         type: String,
         required: false
+    },
+    timesheets: {
+        type: Array,
+        required: false
     }
 })
 

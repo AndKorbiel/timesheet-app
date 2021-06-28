@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import CustomTable from "../components/CustomTable";
-import { useEffect, useState } from "react";
-import {updateProjectEffect, getAllProjectsEffect, removeProjectEffect} from '../redux/effects';
+import { useState } from "react";
+import {updateProjectEffect, removeProjectEffect} from '../redux/effects';
 
 // Material UI
 import Container from "@material-ui/core/Container";
@@ -9,15 +9,10 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
 function ProjectsList(props) {
-    useEffect(()=>{
-        props.getData()
-    }, []);
-
     const [editing, setEdit] = useState(false);
     const [temp, setTemp] = useState({})
 
     const handleEdit = element => {
-        console.log(element)
         setEdit(!editing)
         setTemp(element)
     }
@@ -54,7 +49,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getData: () => dispatch(getAllProjectsEffect()),
         removeProject: project => dispatch(removeProjectEffect(project)),
         updateProject: project => dispatch(updateProjectEffect(project)),
     }

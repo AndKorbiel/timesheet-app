@@ -45,4 +45,16 @@ app.put('/update', (req, res) => {
     })
 })
 
+app.put('/send-ts', (req, res) => {
+    const id = req.body._id;
+
+    Project.findOneAndUpdate({_id: id}, { $push: { timesheets: req.body.data  } }, {new: true}, (err, result) =>{
+        if (err) {
+            res.status(500).json('Error: ' + err)
+        } else {
+            res.status(200).send(result)
+        }
+    })
+})
+
 module.exports = app;
