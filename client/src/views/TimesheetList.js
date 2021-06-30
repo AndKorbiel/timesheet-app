@@ -12,19 +12,42 @@ import TableCell from "@material-ui/core/TableCell";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableContainer from "@material-ui/core/TableContainer";
-import { format, formatDistance, formatRelative, subDays } from 'date-fns'
-
 
 function TimeSheetList(props) {
     useEffect(()=> {
         props.getData()
-        console.log(props.projectsList)
     }, [])
     const columns = ["id", "Name", "Description"];
 
     const formatDate = date => {
-
         return date.replace(/T.*/g, '');
+    }
+
+    const calculateTotalTime = el => {
+        let temp = 0;
+        let tempMinutes = 0;
+
+        el.forEach(n => {
+            if (typeof n.hours!== 'undefined') {
+                temp = temp + parseInt(n.hours)
+            }
+            if (typeof n.minutes !== 'undefined') {
+                tempMinutes = tempMinutes + parseInt(n.minutes)
+            }
+        })
+        return (temp + tempMinutes / 60).toFixed(2) + ' hours'
+    }
+
+    const calculateTotal = (el, type) => {
+        let temp = 0;
+
+        el.forEach(n => {
+            if (typeof n[type] !== "undefined") {
+                temp = temp + parseFloat(n[type])
+            }
+        })
+        return temp.toFixed(1)
+
     }
 
     return (
@@ -65,7 +88,6 @@ function TimeSheetList(props) {
                                                 {project.timesheets.length > 0 &&
                                                 <TableRow className="inner-header">
                                                     <TableCell></TableCell>
-                                                    <TableCell>id</TableCell>
                                                     <TableCell>hours</TableCell>
                                                     <TableCell>minutes</TableCell>
                                                     <TableCell>pages</TableCell>
@@ -76,9 +98,6 @@ function TimeSheetList(props) {
                                                     return (
                                                         <TableRow key={j + 1}>
                                                             <TableCell></TableCell>
-                                                            <TableCell component="th" scope="row">
-                                                                {j + 1}
-                                                            </TableCell>
                                                             <TableCell>
                                                                 {timesheet.hours}
                                                             </TableCell>
@@ -94,6 +113,15 @@ function TimeSheetList(props) {
                                                         </TableRow>
                                                     )
                                                 })}
+                                                <TableRow className="subtotal">
+                                                    <TableCell>Total</TableCell>
+                                                    <TableCell colSpan={2}>
+                                                        {calculateTotalTime(project.timesheets)}
+                                                    </TableCell>
+                                                    <TableCell colSpan={2}>
+                                                        {calculateTotal(project.timesheets, 'pages')} pages
+                                                    </TableCell>
+                                                </TableRow>
                                             </>
                                         )
                                     }

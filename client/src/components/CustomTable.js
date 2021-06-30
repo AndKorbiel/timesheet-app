@@ -1,3 +1,6 @@
+// react
+import React from "react";
+
 // Material UI
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,26 +10,26 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from "@material-ui/core/Button";
-
-// react
-import React from "react";
 import TextField from "@material-ui/core/TextField";
 
 export default class CustomTable extends React.Component {
     state = {
         isEditing: false,
-        temp: {}
+        temp: {},
+        isValidated: true
     }
 
     handleEdit = element => {
         this.setState(state => ({
             isEditing: !state.isEditing,
-            temp: element
+            temp: element,
+            isValidated: true
         }))
     }
 
     handleChange = e => {
-        let { title, description } = this.state.temp
+        let { title, description } = this.state.temp;
+        let { isValidated } = this.state;
 
         if (e.target.name === 'title') {
             title = e.target.value
@@ -34,7 +37,14 @@ export default class CustomTable extends React.Component {
             description = e.target.value
         }
 
+        if (title.length > 2) {
+            isValidated = true;
+        } else {
+            isValidated = false;
+        }
+
         this.setState(prevState => ({
+            isValidated: isValidated,
             temp: {
                 ...prevState.temp,
                 title,
@@ -44,11 +54,13 @@ export default class CustomTable extends React.Component {
     }
 
     handleUpdate = () => {
-        this.props.handleUpdate(this.state.temp)
-        this.setState({
-            isEditing: false,
-            temp: {}
-        })
+        if (this.state.isValidated && this.state.temp.title.length > 2) {
+            this.props.handleUpdate(this.state.temp)
+            this.setState({
+                isEditing: false,
+                temp: {}
+            })
+        }
     }
 
     render() {
@@ -72,9 +84,16 @@ export default class CustomTable extends React.Component {
                                         {index + 1}
                                     </TableCell>
                                     <TableCell>{this.state.isEditing && el._id === this.state.temp._id ?
-                                        <TextField label="Outlined" variant="outlined" name="title" onChange={e => this.handleChange(e)} value={this.state.temp.title} /> : el.title}</TableCell>
+                                        <TextField
+                                            label="Title"
+                                            variant="outlined"
+                                            name="title"
+                                            helperText={!this.state.isValidated ? "Incorrect entry." : ""}
+                                            error={!this.state.isValidated}
+                                            onChange={e => this.handleChange(e)} value={this.state.temp.title} /> : el.title}
+                                    </TableCell>
                                     <TableCell>{this.state.isEditing && el._id === this.state.temp._id ?
-                                        <TextField label="Outlined" variant="outlined" name="description" onChange={e => this.handleChange(e)} value={this.state.temp.description} /> : el.description}</TableCell>
+                                        <TextField label="Description" variant="outlined" name="description" onChange={e => this.handleChange(e)} value={this.state.temp.description} /> : el.description}</TableCell>
                                     <TableCell>
                                         {this.state.isEditing && el._id === this.state.temp._id &&
                                         <Button variant="contained" onClick={() => this.handleEdit(el)}>
