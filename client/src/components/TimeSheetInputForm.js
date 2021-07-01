@@ -43,7 +43,6 @@ class TimeSheetInputForm extends React.Component {
     }
 
     handleDateChange = date => {
-        console.log(date)
         this.setState(state =>{
             return {
                 ...state,
