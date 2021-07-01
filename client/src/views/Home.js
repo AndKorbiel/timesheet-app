@@ -1,10 +1,13 @@
-import CustomInput from "../components/CustomInput";
-import Paper from "@material-ui/core/Paper";
 import React from "react";
+import {connect} from "react-redux";
+// material UI
+import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 
-export default function Home() {
+function Home(props) {
+    const projectsList = props.projectsList ? props.projectsList : [];
+
     return (
         <Container fixed id="main">
             <Grid container spacing={3}>
@@ -13,10 +16,17 @@ export default function Home() {
                         <h1>Welcome in timesheet app</h1>
                         <hr />
                         <h2>Please insert your work data:</h2>
-                        <CustomInput />
                     </Paper>
                 </Grid>
             </Grid>
         </Container>
     )
 }
+
+const mapStateToProps = state => {
+    return {
+        projectsList: state.projectsList
+    }
+}
+
+export default connect(mapStateToProps, null)(Home)

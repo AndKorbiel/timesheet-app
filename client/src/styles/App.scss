@@ -21,5 +21,21 @@
   #main {
     margin-top: 70px;
   }
+
+  #timesheet-input-group {
+    flex-direction: row;
+
+    .MuiSelect-outlined.MuiSelect-outlined {
+      min-width: 160px;
+    }
+  }
+
+  .MuiTableHead-root {
+    background: #d5525f;
+  }
+
+  .inner-header, .subtotal {
+    background: #ebebeb;
+  }
 }
 
