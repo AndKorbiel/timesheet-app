@@ -27,7 +27,7 @@ function ProjectsList(props) {
         <Container fixed id="main">
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <Paper>
+                    <Paper className="app-main">
                         <h1>Projects list</h1>
                         <ProjectInputForm onSubmit={props.addNewProject} />
                         {props.projectsList &&

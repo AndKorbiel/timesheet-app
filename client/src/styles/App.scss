@@ -11,6 +11,7 @@
     width: 100%;
     color: #fff;
     padding: 10px 0;
+    z-index: 99;
 
     .MuiTabs-flexContainer {
       align-items: center;
@@ -18,15 +19,45 @@
     }
   }
 
-  #main {
-    margin-top: 70px;
+  .app-main {
+    padding: 30px;
   }
 
-  #timesheet-input-group {
+  #main {
+    margin-top: 90px;
+  }
+
+  #timesheet-input-group,
+  #project-input-group {
     flex-direction: row;
+    margin: 20px auto 40px;
 
     .MuiSelect-outlined.MuiSelect-outlined {
       min-width: 160px;
+    }
+
+    .MuiOutlinedInput-root {
+      height: 55px;
+      margin: 0 2px;
+    }
+
+    .MuiGrid-justify-xs-space-around {
+      justify-content: unset;
+      width: auto;
+      margin: 0 10px;
+    }
+
+    .MuiFormControl-marginNormal {
+      margin-top: 5px;
+    }
+
+    button {
+      height: 54px;
+      min-width: 120px;
+    }
+
+    .MuiOutlinedInput-input {
+      width: 125px;
     }
   }
 

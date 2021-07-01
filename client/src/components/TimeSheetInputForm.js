@@ -93,9 +93,6 @@ class TimeSheetInputForm extends React.Component {
                         onChange={e => this.handleSelect(e)}
                         label="Project"
                     >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
                         {this.props.projects && this.props.projects.map(project => {
                             return (
                                 <MenuItem value={project._id} key={project._id}>{project.title}</MenuItem>
@@ -103,7 +100,7 @@ class TimeSheetInputForm extends React.Component {
                         })}
                     </Select>
                     <TextField label="Hours" name="hours" value={this.state.hours} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
-                    <TextField label="Minutes" name="minutes" value={this.state.minutes} onChange={e => this.handleChange(e)}  variant="outlined" type="number" />
+                    <TextField label="Minutes" name="minutes" value={this.state.minutes} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
                     <TextField label="Pages" name="pages" value={this.state.pages} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
@@ -113,7 +110,7 @@ class TimeSheetInputForm extends React.Component {
                                 format="yyyy/MM/dd"
                                 margin="normal"
                                 label="Choose date"
-                                value={this.state.selectedDate}
+                                value={this.state.data.selectedDate}
                                 onChange={this.handleDateChange}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
@@ -121,7 +118,7 @@ class TimeSheetInputForm extends React.Component {
                             />
                         </Grid>
                     </MuiPickersUtilsProvider>
-                    <Button variant="contained" onClick={() => this.handleSubmit()}>
+                    <Button variant="contained" color="primary" onClick={() => this.handleSubmit()}>
                         Save
                     </Button>
                 </FormControl>
