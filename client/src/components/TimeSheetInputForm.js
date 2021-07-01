@@ -28,7 +28,7 @@ class TimeSheetInputForm extends React.Component {
     }
 
     componentDidMount() {
-        const date_create = new Date()
+        const date_create = new Date();
         this.setState({
             data: {
                 selectedDate: date_create
