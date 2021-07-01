@@ -11,6 +11,7 @@ import {
     Link
 } from "react-router-dom";
 import TimeSheetList from "../views/TimesheetList";
+import Statistics from "../views/Statistics";
 
 export default function Navbar() {
     const [value, setValue] = useState(0);
@@ -25,13 +26,15 @@ export default function Navbar() {
                 <Tabs value={value} onChange={handleChange}>
                     <Tab value={0} label="Home" to='/' component={Link} />
                     <Tab value={1} label="Projects"  to='/projects' component={Link}/>
-                    <Tab value={2} label="Timesheet list"  to='/ts-list' component={Link}/>
+                    <Tab value={2} label="Timesheets"  to='/ts-list' component={Link}/>
+                    <Tab value={2} label="Statistics"  to='/statistics' component={Link}/>
                 </Tabs>
             </div>
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/projects" component={ProjectsList} />
                 <Route path="/ts-list" component={TimeSheetList} />
+                <Route path="/statistics" component={Statistics} />
             </Switch>
         </Router>
     )

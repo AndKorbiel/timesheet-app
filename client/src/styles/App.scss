@@ -65,8 +65,23 @@
     background: #d5525f;
   }
 
-  .inner-header, .subtotal {
+  .title-row {
+    background: #f5f5f5;
+    .MuiTableCell-root {
+      font-weight: bold;
+    }
+  }
+
+  .inner-header{
+    background: #f5f5f5;
+  }
+
+  .subtotal {
     background: #ebebeb;
+
+    .MuiTableCell-root {
+      font-style: italic;
+    }
   }
 }
 

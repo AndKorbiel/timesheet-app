@@ -14,7 +14,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableContainer from "@material-ui/core/TableContainer";
 
 function TimeSheetList(props) {
-    useEffect(()=> {
+    useEffect(() => {
         props.getData()
     }, [])
     const columns = ["id", "Name", "Description"];
@@ -28,7 +28,7 @@ function TimeSheetList(props) {
         let tempMinutes = 0;
 
         el.forEach(n => {
-            if (typeof n.hours!== 'undefined') {
+            if (typeof n.hours !== 'undefined') {
                 temp = temp + parseInt(n.hours)
             }
             if (typeof n.minutes !== 'undefined') {
@@ -47,7 +47,6 @@ function TimeSheetList(props) {
             }
         })
         return temp.toFixed(1)
-
     }
 
     return (
@@ -56,9 +55,9 @@ function TimeSheetList(props) {
                 <Grid item xs={12}>
                     <Paper className="app-main">
                         <h1>Timesheets list</h1>
-                        <TimeSheetInputForm />
+                        <TimeSheetInputForm/>
                         <TableContainer component={Paper}>
-                            <Table aria-label="simple table">
+                            <Table aria-label="timesheets list table">
                                 <TableHead>
                                     <TableRow>
                                         {columns.map((el, index) => {
@@ -72,59 +71,59 @@ function TimeSheetList(props) {
                                 </TableHead>
                                 <TableBody>
                                     {props.projectsList && props.projectsList.map((project, index) => {
-                                        return (
-                                            <>
-                                                <TableRow key={index + 1}>
-                                                    <TableCell component="th" scope="row">
-                                                        {index + 1}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {project.title}
-                                                    </TableCell>
-                                                    <TableCell colSpan={3}>
-                                                        {project.description}
-                                                    </TableCell>
-                                                </TableRow>
-                                                {project.timesheets.length > 0 &&
-                                                <TableRow className="inner-header">
-                                                    <TableCell></TableCell>
-                                                    <TableCell>hours</TableCell>
-                                                    <TableCell>minutes</TableCell>
-                                                    <TableCell>pages</TableCell>
-                                                    <TableCell>date</TableCell>
-                                                </TableRow>
-                                                }
-                                                {project.timesheets.map((timesheet, j) => {
-                                                    return (
-                                                        <TableRow key={j + 1}>
-                                                            <TableCell></TableCell>
-                                                            <TableCell>
-                                                                {timesheet.hours}
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                {timesheet.minutes}
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                {timesheet.pages}
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                {formatDate(timesheet.selectedDate)}
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    )
-                                                })}
-                                                <TableRow className="subtotal">
-                                                    <TableCell>Total</TableCell>
-                                                    <TableCell colSpan={2}>
-                                                        {calculateTotalTime(project.timesheets)}
-                                                    </TableCell>
-                                                    <TableCell colSpan={2}>
-                                                        {calculateTotal(project.timesheets, 'pages')} pages
-                                                    </TableCell>
-                                                </TableRow>
-                                            </>
-                                        )
-                                    }
+                                            return (
+                                                <>
+                                                    <TableRow key={index + 1} className="title-row">
+                                                        <TableCell component="th" scope="row">
+                                                            {index + 1}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {project.title}
+                                                        </TableCell>
+                                                        <TableCell colSpan={3}>
+                                                            {project.description}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                    {project.timesheets.length > 0 &&
+                                                    <TableRow className="inner-header">
+                                                        <TableCell></TableCell>
+                                                        <TableCell>hours</TableCell>
+                                                        <TableCell>minutes</TableCell>
+                                                        <TableCell>pages</TableCell>
+                                                        <TableCell>date</TableCell>
+                                                    </TableRow>
+                                                    }
+                                                    {project.timesheets.map((timesheet, j) => {
+                                                        return (
+                                                            <TableRow key={j + 1}>
+                                                                <TableCell></TableCell>
+                                                                <TableCell>
+                                                                    {timesheet.hours}
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {timesheet.minutes}
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {timesheet.pages}
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {formatDate(timesheet.selectedDate)}
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        )
+                                                    })}
+                                                    <TableRow className="subtotal">
+                                                        <TableCell>Total</TableCell>
+                                                        <TableCell colSpan={2}>
+                                                            {calculateTotalTime(project.timesheets)}
+                                                        </TableCell>
+                                                        <TableCell colSpan={2}>
+                                                            {calculateTotal(project.timesheets, 'pages')} pages
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </>
+                                            )
+                                        }
                                     )}
                                 </TableBody>
                             </Table>
