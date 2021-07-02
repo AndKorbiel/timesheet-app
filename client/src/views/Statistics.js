@@ -1,7 +1,7 @@
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {getAllProjectsEffect} from "../redux/effects";
 import {connect} from "react-redux";
 import Table from "@material-ui/core/Table";
@@ -11,102 +11,156 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
 
-function Statistics(props) {
-    let data = [];
-    const columns = ["id", "Name", "Description"];
+class Statistics extends React.Component {
+    state = {}
+    columns = ["id", "Name", "Description"];
 
-    useEffect(() => {
-        props.getData()
-    }, [])
+    componentDidMount() {
+        this.props.getData()
+        const check = setInterval(()=> {
+            if (this.props.projectsList) {
+                const state = this.generateList(this.props.projectsList)
+                this.setState(state)
+                clearInterval(check)
+            }
+        }, 50)
 
-    const formatDate = date => {
+    }
+
+    formatDate = date => {
         return date.replace(/T.*/g, '');
     }
 
-    const calculateTotalTime = el => {
+    calculateTotalTime = el => {
         let temp = 0;
         let tempMinutes = 0;
 
         el.forEach(n => {
-            if (typeof n.hours !== 'undefined') {
-                temp = temp + parseInt(n.hours)
+            if (typeof n.timesheet.hours !== 'undefined') {
+                temp = temp + parseInt(n.timesheet.hours)
             }
-            if (typeof n.minutes !== 'undefined') {
-                tempMinutes = tempMinutes + parseInt(n.minutes)
+            if (typeof n.timesheet.minutes !== 'undefined') {
+                tempMinutes = tempMinutes + parseInt(n.timesheet.minutes)
             }
         })
         return (temp + tempMinutes / 60).toFixed(2) + ' hours'
     }
 
-    const calculateTotal = (el, type) => {
+    calculateTotal = (el, type) => {
         let temp = 0;
 
         el.forEach(n => {
-            if (typeof n[type] !== "undefined") {
-                temp = temp + parseFloat(n[type])
+            if (typeof n.timesheet[type] !== "undefined") {
+                temp = temp + parseFloat(n.timesheet[type])
             }
         })
         return temp.toFixed(1)
     }
 
-    const generateList = list => {
-        let myList = {}
+    generateList = list => {
+        let tsList = {}
 
         let filters = []
         list.forEach(el => {
             el.timesheets.forEach(timesheet => {
-                if (filters.indexOf(formatDate(timesheet.selectedDate)) < 0) {
-                    filters.push(formatDate(timesheet.selectedDate))
+                if (filters.indexOf(this.formatDate(timesheet.selectedDate)) < 0 && this.formatDate(timesheet.selectedDate).length > 1) {
+                    filters.push(this.formatDate(timesheet.selectedDate))
                 }
             })
         })
-        list.forEach(el => {
-            el.timesheets.forEach(timesheet => {
-                filters.forEach(filter => {
-                    let arr = []
-                    if (formatDate(timesheet.selectedDate) === filter) {
-                        console.log('jest')
-                        arr.push(el)
+        filters.forEach(filter => {
+            let temp = [];
+            list.forEach(listEl => {
+                listEl.timesheets.forEach(timesheet => {
+                    if (this.formatDate(timesheet.selectedDate) === filter) {
+                        temp.push({project: listEl, timesheet: timesheet})
                     }
-                    myList[filter] = arr;
+                    tsList[filter] = temp;
                 })
-
             })
         })
-        console.log(myList)
+        const state = {filters: filters, tsList: tsList};
+        return state
     }
 
-    return (
-        <Container fixed id="main">
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <Paper className="app-main">
-                        <h1>Statistics</h1>
-                        <TableContainer component={Paper}>
-                            <Table aria-label="timesheets list table">
-                                <TableHead>
-                                    <TableRow>
-                                        {columns.map((el, index) => {
+    render() {
+        return (
+            <Container fixed id="main">
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <Paper className="app-main">
+                            <h1>Statistics</h1>
+                            <TableContainer component={Paper}>
+                                <Table aria-label="timesheets list table">
+                                    <TableHead>
+                                        <TableRow>
+                                            {this.columns.map((el, index) => {
+                                                return (
+                                                    <TableCell key={index + 1}>{el}</TableCell>
+                                                )
+                                            })}
+                                            <TableCell colSpan={3}>
+                                            </TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {this.state.filters && this.state.filters.map(filter => {
                                             return (
-                                                <TableCell key={index + 1}>{el}</TableCell>
+                                                <>
+                                                    <TableRow>
+                                                        <TableCell colSpan={5}>
+                                                            {filter}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell></TableCell>
+                                                        <TableCell>Project name</TableCell>
+                                                        <TableCell>Hours</TableCell>
+                                                        <TableCell>Minutes</TableCell>
+                                                        <TableCell>Pages</TableCell>
+                                                    </TableRow>
+                                                    {this.state.tsList[filter].map(timesheet => {
+                                                        return (
+                                                            <TableRow>
+                                                                <TableCell></TableCell>
+                                                                <TableCell>
+                                                                    {timesheet.project.title}
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {timesheet.timesheet.hours}
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {timesheet.timesheet.minutes}
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {timesheet.timesheet.pages}
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        )
+                                                    })}
+                                                    <TableRow className="subtotal">
+                                                        <TableCell></TableCell>
+                                                        <TableCell>Total</TableCell>
+                                                        <TableCell colSpan={2}>
+                                                            {this.calculateTotalTime(this.state.tsList[filter])}
+                                                        </TableCell>
+                                                        <TableCell colSpan={2}>
+                                                            {this.calculateTotal(this.state.tsList[filter], 'pages')} pages
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </>
                                             )
                                         })}
-                                        <TableCell colSpan={3}>
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                {props.projectsList &&
-                                    <TableBody>
-                                        {generateList(props.projectsList)}
                                     </TableBody>
-                                }
-                            </Table>
-                        </TableContainer>
-                    </Paper>
+
+                                </Table>
+                            </TableContainer>
+                        </Paper>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Container>
-    )
+            </Container>
+        )
+    }
 }
 
 const mapStateToProps = state => {
