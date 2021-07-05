@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import {sendTimesheetEffect} from '../redux/effects';
+import {getAllProjectsEffect, sendTimesheetEffect} from '../redux/effects';
+import CustomDialog from "./CustomDialog";
 
 // material-ui
 import InputLabel from '@material-ui/core/InputLabel';
@@ -16,18 +17,24 @@ import {
 } from '@material-ui/pickers';
 import Button from "@material-ui/core/Button";
 
+const date_create = new Date();
+const initialState = {
+    _id: '',
+    data: {
+        hours: '',
+        minutes: '',
+        pages: '',
+        selectedDate: date_create
+    },
+    openModal: false,
+    isValidated: true
+}
+
 class TimeSheetInputForm extends React.Component {
-    state = {
-        _id: '',
-        data: {
-            hours: '',
-            minutes: '',
-            pages: '',
-            selectedDate: ''
-        }
-    }
+    state = initialState;
 
     componentDidMount() {
+        this.props.getData();
         const date_create = new Date();
         this.setState({
             data: {
@@ -38,7 +45,8 @@ class TimeSheetInputForm extends React.Component {
 
     handleSelect = e => {
         this.setState({
-            _id: e.target.value
+            _id: e.target.value,
+            isValidated: true
         })
     }
 
@@ -51,7 +59,6 @@ class TimeSheetInputForm extends React.Component {
                     selectedDate: date
                 }
             }
-
         })
     }
 
@@ -76,10 +83,27 @@ class TimeSheetInputForm extends React.Component {
         })
     }
 
+    handleClose = () => {
+        this.setState({
+            openModal: false
+        })
+    };
+
     handleSubmit = () => {
-        const timesheet = this.state;
-        this.props.submitTimesheet(timesheet)
-        console.log(timesheet)
+        if (this.state.isValidated && this.state._id.length > 2) {
+            const timesheet = this.state;
+            this.props.submitTimesheet(timesheet)
+            this.setState({
+                openModal: true
+            })
+            setTimeout(()=>{
+                this.setState(initialState)
+            }, 1000)
+        } else {
+            this.setState({
+                isValidated: false
+            })
+        }
     }
 
     render() {
@@ -90,6 +114,7 @@ class TimeSheetInputForm extends React.Component {
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
                         value={this.state._id}
+                        error={!this.state.isValidated}
                         onChange={e => this.handleSelect(e)}
                         label="Project"
                     >
@@ -99,9 +124,9 @@ class TimeSheetInputForm extends React.Component {
                             )
                         })}
                     </Select>
-                    <TextField label="Hours" name="hours" value={this.state.hours} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
-                    <TextField label="Minutes" name="minutes" value={this.state.minutes} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
-                    <TextField label="Pages" name="pages" value={this.state.pages} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
+                    <TextField label="Hours" name="hours" value={this.state.data.hours} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
+                    <TextField label="Minutes" name="minutes" value={this.state.data.minutes} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
+                    <TextField label="Pages" name="pages" value={this.state.data.pages} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
                             <KeyboardDatePicker
@@ -121,6 +146,13 @@ class TimeSheetInputForm extends React.Component {
                     <Button variant="contained" color="primary" onClick={() => this.handleSubmit()}>
                         Save
                     </Button>
+                    <CustomDialog
+                        open={this.state.openModal}
+                        handleClose={this.handleClose}
+                        cancelOption={false}
+                        title="Timesheet has been submitted"
+                        description=""
+                    />
                 </FormControl>
 
         )
@@ -135,7 +167,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        submitTimesheet: project => dispatch(sendTimesheetEffect(project))
+        submitTimesheet: project => dispatch(sendTimesheetEffect(project)),
+        getData: () => dispatch(getAllProjectsEffect())
     }
 }
 

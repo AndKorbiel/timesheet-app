@@ -1,5 +1,6 @@
 // react
 import React from "react";
+import CustomDialog from "../components/CustomDialog";
 
 // Material UI
 import Table from '@material-ui/core/Table';
@@ -11,12 +12,15 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Container from "@material-ui/core/Container";
 
 export default class CustomTable extends React.Component {
     state = {
         isEditing: false,
         temp: {},
-        isValidated: true
+        isValidated: true,
+        showModal: false,
+        confirmation: false
     }
 
     handleEdit = element => {
@@ -61,6 +65,26 @@ export default class CustomTable extends React.Component {
                 temp: {}
             })
         }
+    }
+
+    handleCancel = () => {
+        this.setState({
+            showModal: false
+        })
+    }
+
+    handleConfirmation = el => {
+        this.setState({
+            showModal: true,
+            temp: el
+        })
+    }
+
+    handleRemove = () => {
+        this.props.handleRemove(this.state.temp)
+        this.setState({
+            showModal: false,
+        })
     }
 
     render() {
@@ -109,11 +133,19 @@ export default class CustomTable extends React.Component {
                                             Edit
                                         </Button>}
                                         {!this.state.isEditing &&
-                                        <Button variant="contained" color="secondary" onClick={() => this.props.handleRemove(el)}>
+                                        <Button variant="contained" color="secondary" onClick={() => this.handleConfirmation(el)}>
                                             Remove
                                         </Button>
                                         }
                                     </TableCell>
+                                    <CustomDialog
+                                        open={this.state.showModal}
+                                        handleClose={this.handleRemove}
+                                        cancelOption={true}
+                                        handleCancel={this.handleCancel}
+                                        title="Are you sure want to remove this project?"
+                                        description="This project will be removed permanently wth all submitted timesheets."
+                                    />
                                 </TableRow>
                             )
                         })}

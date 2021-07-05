@@ -27,7 +27,7 @@ export default function Navbar() {
                     <Tab value={0} label="Home" to='/' component={Link} />
                     <Tab value={1} label="Projects"  to='/projects' component={Link}/>
                     <Tab value={2} label="Timesheets"  to='/ts-list' component={Link}/>
-                    <Tab value={2} label="Statistics"  to='/statistics' component={Link}/>
+                    <Tab value={3} label="Statistics"  to='/statistics' component={Link}/>
                 </Tabs>
             </div>
             <Switch>
