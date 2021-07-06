@@ -2,22 +2,27 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 
 import TimeSheetInputForm from '../components/TimeSheetInputForm';
-import {getAllProjectsEffect} from "../redux/effects";
+import {getAllProjectsEffect, updateTimesheetEffect} from "../redux/effects";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableContainer from "@material-ui/core/TableContainer";
+import Button from "@material-ui/core/Button";
+import CustomDialog from "../components/CustomDialog";
 
 function TimeSheetList(props) {
     useEffect(() => {
         props.getData()
-    }, [])
+    }, []);
+
     const columns = ["id", "Name", "Description"];
+    const [showModal, setModal] = useState(false);
+    const [temp, setTemp] = useState({})
 
     const formatDate = date => {
         return date.replace(/T.*/g, '');
@@ -47,6 +52,25 @@ function TimeSheetList(props) {
             }
         })
         return temp.toFixed(1)
+    }
+
+    const handleRemove = () => {
+        const projectToUpdate = temp.project;
+        const tsList = projectToUpdate.timesheets.filter(el => {
+            return el.hash !== temp.timesheet.hash
+        })
+        projectToUpdate.timesheets = tsList
+        props.updateTimesheetsList(projectToUpdate);
+        setModal(false)
+    }
+
+    const handleConfrimation = (timesheet, project) => {
+        setTemp({timesheet, project});
+        setModal(true)
+    }
+
+    const handleCancel = () => {
+        setModal(false)
     }
 
     return (
@@ -80,7 +104,7 @@ function TimeSheetList(props) {
                                                         <TableCell>
                                                             {project.title}
                                                         </TableCell>
-                                                        <TableCell colSpan={3}>
+                                                        <TableCell colSpan={4}>
                                                             {project.description}
                                                         </TableCell>
                                                     </TableRow>
@@ -91,6 +115,7 @@ function TimeSheetList(props) {
                                                         <TableCell>minutes</TableCell>
                                                         <TableCell>pages</TableCell>
                                                         <TableCell>date</TableCell>
+                                                        <TableCell>edit</TableCell>
                                                     </TableRow>
                                                     }
                                                     {project.timesheets.map((timesheet, j) => {
@@ -109,6 +134,11 @@ function TimeSheetList(props) {
                                                                 <TableCell>
                                                                     {formatDate(timesheet.selectedDate)}
                                                                 </TableCell>
+                                                                <TableCell>
+                                                                    <Button variant="contained" color="secondary" onClick={() => handleConfrimation( timesheet, project)}>
+                                                                        Remove
+                                                                    </Button>
+                                                                </TableCell>
                                                             </TableRow>
                                                         )
                                                     })}
@@ -117,10 +147,18 @@ function TimeSheetList(props) {
                                                         <TableCell colSpan={2}>
                                                             {calculateTotalTime(project.timesheets)}
                                                         </TableCell>
-                                                        <TableCell colSpan={2}>
+                                                        <TableCell colSpan={3}>
                                                             {calculateTotal(project.timesheets, 'pages')} pages
                                                         </TableCell>
                                                     </TableRow>
+                                                    <CustomDialog
+                                                        open={showModal}
+                                                        handleClose={handleRemove}
+                                                        cancelOption={true}
+                                                        handleCancel={handleCancel}
+                                                        title="Are you sure want to remove this timesheet?"
+                                                        description="This timesheet will be removed permanently."
+                                                    />
                                                 </>
                                             )
                                         }
@@ -143,7 +181,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getData: () => dispatch(getAllProjectsEffect())
+        getData: () => dispatch(getAllProjectsEffect()),
+        updateTimesheetsList: project => dispatch(updateTimesheetEffect(project))
     }
 }
 

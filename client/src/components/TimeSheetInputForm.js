@@ -89,9 +89,14 @@ class TimeSheetInputForm extends React.Component {
         })
     };
 
+    generateHash = () => {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    }
+
     handleSubmit = () => {
         if (this.state.isValidated && this.state._id.length > 2) {
             const timesheet = this.state;
+            timesheet.data.hash = this.generateHash()
             this.props.submitTimesheet(timesheet)
             this.setState({
                 openModal: true

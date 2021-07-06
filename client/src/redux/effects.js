@@ -77,3 +77,22 @@ export const sendTimesheetEffect = project => {
             .catch(err => console.log(err))
     }
 }
+
+export const updateTimesheetEffect = project => {
+    console.log(project)
+    return dispatch => {
+        fetch('/projects/update-ts', {
+            method: "PUT",
+            body: JSON.stringify(project),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                dispatch(updateProjectInStore(data))
+            })
+            .catch(err => console.log(err))
+    }
+}

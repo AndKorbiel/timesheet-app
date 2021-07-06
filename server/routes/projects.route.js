@@ -57,4 +57,17 @@ app.put('/send-ts', (req, res) => {
     })
 })
 
+app.put('/update-ts', (req, res) => {
+    const id = req.body._id;
+    console.log(req.body.data)
+
+    Project.findOneAndUpdate({_id: id}, { timesheets: req.body.timesheets }, {new: true}, (err, result) =>{
+        if (err) {
+            res.status(500).json('Error: ' + err)
+        } else {
+            res.status(200).send(result)
+        }
+    })
+})
+
 module.exports = app;
