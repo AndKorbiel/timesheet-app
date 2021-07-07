@@ -1,8 +1,7 @@
-import { useState} from "react";
+import {useState} from "react";
 import ProjectsList from '../views/ProjectList';
+import LanguageSwitcher from './LanguageSwitcher';
 import Home from '../views/Home';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 
 import {
     BrowserRouter as Router,
@@ -12,6 +11,10 @@ import {
 } from "react-router-dom";
 import TimeSheetList from "../views/TimesheetList";
 import Statistics from "../views/Statistics";
+
+// material ui
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 export default function Navbar() {
     const [value, setValue] = useState(0);
@@ -28,6 +31,7 @@ export default function Navbar() {
                     <Tab value={1} label="Projects"  to='/projects' component={Link}/>
                     <Tab value={2} label="Timesheets"  to='/ts-list' component={Link}/>
                     <Tab value={3} label="Statistics"  to='/statistics' component={Link}/>
+                    <LanguageSwitcher />
                 </Tabs>
             </div>
             <Switch>

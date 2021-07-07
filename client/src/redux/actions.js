@@ -1,4 +1,4 @@
-import { ADD_NEW_PROJECT, ADD_INITIAL_DATA, REMOVE_PROJECT_FROM_STORE, UPDATE_PROJECT_IN_STORE } from "./types";
+import { ADD_NEW_PROJECT, ADD_INITIAL_DATA, REMOVE_PROJECT_FROM_STORE, UPDATE_PROJECT_IN_STORE, SET_LANGUAGE } from "./types";
 
 export function addNewProject(project) {
     return {
@@ -25,5 +25,12 @@ export function updateProjectInStore(project) {
     return {
         type: UPDATE_PROJECT_IN_STORE,
         payload: project
+    }
+}
+
+export function setLanguage(language) {
+    return {
+        type: SET_LANGUAGE,
+        payload: language
     }
 }
