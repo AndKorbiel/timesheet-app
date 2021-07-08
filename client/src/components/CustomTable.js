@@ -109,7 +109,7 @@ export default class CustomTable extends React.Component {
                                     </TableCell>
                                     <TableCell>{this.state.isEditing && el._id === this.state.temp._id ?
                                         <TextField
-                                            label="Title"
+                                            label={this.props.translations.project_input_title}
                                             variant="outlined"
                                             name="title"
                                             helperText={!this.state.isValidated ? "Incorrect entry." : ""}
@@ -117,24 +117,29 @@ export default class CustomTable extends React.Component {
                                             onChange={e => this.handleChange(e)} value={this.state.temp.title} /> : el.title}
                                     </TableCell>
                                     <TableCell>{this.state.isEditing && el._id === this.state.temp._id ?
-                                        <TextField label="Description" variant="outlined" name="description" onChange={e => this.handleChange(e)} value={this.state.temp.description} /> : el.description}</TableCell>
+                                        <TextField
+                                            label={this.props.translations.project_input_description}
+                                            variant="outlined"
+                                            name="description"
+                                            onChange={e => this.handleChange(e)}
+                                            value={this.state.temp.description} /> : el.description}</TableCell>
                                     <TableCell>
                                         {this.state.isEditing && el._id === this.state.temp._id &&
                                         <Button variant="contained" onClick={() => this.handleEdit(el)}>
-                                            Cancel
+                                            {this.props.translations.dialog_cancel}
                                         </Button>}
                                         {this.state.isEditing && el._id === this.state.temp._id &&
                                         <Button variant="contained" color="secondary" onClick={() => this.handleUpdate()}>
-                                            Update
+                                            {this.props.translations.project_list_update_label}
                                         </Button>
                                         }
                                         {!this.state.isEditing &&
                                         <Button variant="contained" onClick={() => this.handleEdit(el)}>
-                                            Edit
+                                            {this.props.translations.project_list_edit_label}
                                         </Button>}
                                         {!this.state.isEditing &&
                                         <Button variant="contained" color="secondary" onClick={() => this.handleConfirmation(el)}>
-                                            Remove
+                                            {this.props.translations.project_list_remove_label}
                                         </Button>
                                         }
                                     </TableCell>
@@ -143,8 +148,9 @@ export default class CustomTable extends React.Component {
                                         handleClose={this.handleRemove}
                                         cancelOption={true}
                                         handleCancel={this.handleCancel}
-                                        title="Are you sure want to remove this project?"
-                                        description="This project will be removed permanently wth all submitted timesheets."
+                                        translations={this.props.translations}
+                                        title={this.props.translations.project_dialog_title}
+                                        description={this.props.translations.project_dialog_subtitle}
                                     />
                                 </TableRow>
                             )

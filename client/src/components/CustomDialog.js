@@ -24,11 +24,11 @@ export default function CustomDialog(props) {
             <DialogActions>
                 {props.cancelOption &&
                     <Button onClick={props.handleCancel} color="default" autoFocus>
-                        Cancel
+                        {props.translations.dialog_cancel}
                     </Button>
                 }
                 <Button onClick={props.handleClose} color="primary">
-                    Ok
+                    {props.translations.dialog_accept}
                 </Button>
             </DialogActions>
         </Dialog>

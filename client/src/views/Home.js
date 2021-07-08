@@ -12,10 +12,10 @@ function Home(props) {
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Paper className="app-main">
-                        <h1>{props.translations[props.selectedLanguage].home_page_title}</h1>
+                        <h1>{props.translations.home_page_title}</h1>
                         <hr />
-                        <h2>{props.translations[props.selectedLanguage].home_page_subtitle}</h2>
-                        <TimeSheetInputForm />
+                        <h2>{props.translations.home_page_subtitle}</h2>
+                        <TimeSheetInputForm translations={props.translations} />
                     </Paper>
                 </Grid>
             </Grid>
@@ -25,8 +25,7 @@ function Home(props) {
 
 const mapStateToProps = state => {
     return {
-        translations: state.translations,
-        selectedLanguage: state.selectedLanguage
+        translations: state.translations[state.selectedLanguage]
     }
 }
 

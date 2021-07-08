@@ -13,7 +13,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 
 class Statistics extends React.Component {
     state = {}
-    columns = ["id", "Name", "Description"];
 
     componentDidMount() {
         this.props.getData()
@@ -24,7 +23,6 @@ class Statistics extends React.Component {
                 clearInterval(check)
             }
         }, 50)
-
     }
 
     formatDate = date => {
@@ -43,7 +41,7 @@ class Statistics extends React.Component {
                 tempMinutes = tempMinutes + parseInt(n.timesheet.minutes)
             }
         })
-        return (temp + tempMinutes / 60).toFixed(2) + ' hours'
+        return (temp + tempMinutes / 60).toFixed(2)
     }
 
     calculateTotal = (el, type) => {
@@ -89,17 +87,15 @@ class Statistics extends React.Component {
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Paper className="app-main">
-                            <h1>Statistics</h1>
+                            <h1>{this.props.translations.timesheets_list_title}</h1>
                             <TableContainer component={Paper}>
                                 <Table aria-label="timesheets list table">
                                     <TableHead>
                                         <TableRow>
-                                            {this.columns.map((el, index) => {
-                                                return (
-                                                    <TableCell key={index + 1}>{el}</TableCell>
-                                                )
-                                            })}
-                                            <TableCell colSpan={3}>
+                                            <TableCell>
+                                                {this.props.translations.statistics_table_header}
+                                            </TableCell>
+                                            <TableCell colSpan={4}>
                                             </TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -114,10 +110,10 @@ class Statistics extends React.Component {
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell></TableCell>
-                                                        <TableCell>Project name</TableCell>
-                                                        <TableCell>Hours</TableCell>
-                                                        <TableCell>Minutes</TableCell>
-                                                        <TableCell>Pages</TableCell>
+                                                        <TableCell>{this.props.translations.timesheets_list_table_project_name_label}</TableCell>
+                                                        <TableCell>{this.props.translations.timesheets_list_table_hours}</TableCell>
+                                                        <TableCell>{this.props.translations.timesheets_list_table_minutes}</TableCell>
+                                                        <TableCell>{this.props.translations.timesheets_list_table_pages}</TableCell>
                                                     </TableRow>
                                                     {this.state.tsList[filter].map(timesheet => {
                                                         return (
@@ -140,12 +136,12 @@ class Statistics extends React.Component {
                                                     })}
                                                     <TableRow className="subtotal">
                                                         <TableCell></TableCell>
-                                                        <TableCell>Total</TableCell>
+                                                        <TableCell>{this.props.translations.timesheets_list_table_name}</TableCell>
                                                         <TableCell colSpan={2}>
-                                                            {this.calculateTotalTime(this.state.tsList[filter])}
+                                                            {this.calculateTotalTime(this.state.tsList[filter])} {this.props.translations.timesheets_list_table_hours}
                                                         </TableCell>
                                                         <TableCell colSpan={2}>
-                                                            {this.calculateTotal(this.state.tsList[filter], 'pages')} pages
+                                                            {this.calculateTotal(this.state.tsList[filter], 'pages')} {this.props.translations.timesheets_list_table_pages}
                                                         </TableCell>
                                                     </TableRow>
                                                 </>
@@ -165,7 +161,8 @@ class Statistics extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        projectsList: state.projectsList
+        projectsList: state.projectsList,
+        translations: state.translations[state.selectedLanguage]
     }
 }
 

@@ -9,7 +9,6 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
-
 function ProjectsList(props) {
     useEffect(()=> {
         props.getData()
@@ -28,17 +27,23 @@ function ProjectsList(props) {
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Paper className="app-main">
-                        <h1>Projects list</h1>
-                        <ProjectInputForm onSubmit={props.addNewProject} />
+                        <h1>{props.translations.projects_list_title}</h1>
+                        <ProjectInputForm onSubmit={props.addNewProject}
+                                          titleLabel={props.translations.project_input_title}
+                                          descriptionLabel={props.translations.project_input_description}
+                                          addLabel={props.translations.project_input_add}
+                                          errorLabel={props.translations.project_input_error}
+                        />
                         {props.projectsList &&
                             <CustomTable
-                                columns={["id", "Name", "Description", "Edit"]}
+                                columns={props.translations.projects_list_table_headers}
                                 list={props.projectsList}
                                 handleRemove={props.removeProject}
                                 handleEdit={handleEdit}
                                 handleUpdate={props.updateProject}
                                 editing={editing}
                                 temp={temp}
+                                translations={props.translations}
                             />
                         }
                     </Paper>
@@ -50,7 +55,8 @@ function ProjectsList(props) {
 
 const mapStateToProps = state => {
     return {
-        projectsList: state.projectsList
+        projectsList: state.projectsList,
+        translations: state.translations[state.selectedLanguage]
     }
 }
 

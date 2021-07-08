@@ -44,9 +44,9 @@ export default class ProjectInputForm extends React.Component {
     render() {
         return (
             <div id="project-input-group">
-                <TextField label="Title" variant="outlined" name="title" helperText={!this.state.isValidated ? "Incorrect entry." : ""} error={!this.state.isValidated} value={this.state.title} onChange={e => this.handleChange(e)} />
-                <TextField label="Description" variant="outlined" name="description" value={this.state.description} onChange={e => this.handleChange(e)} />
-                <Button variant="contained" onClick={this.handleSubmit} color="primary" >Add</Button>
+                <TextField label={this.props.titleLabel} variant="outlined" name="title" helperText={!this.state.isValidated ? this.props.errorLabel : ""} error={!this.state.isValidated} value={this.state.title} onChange={e => this.handleChange(e)} />
+                <TextField label={this.props.descriptionLabel} variant="outlined" name="description" value={this.state.description} onChange={e => this.handleChange(e)} />
+                <Button variant="contained" onClick={this.handleSubmit} color="primary">{this.props.addLabel}</Button>
             </div>
         )
     }

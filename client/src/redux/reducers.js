@@ -1,16 +1,8 @@
 import {ADD_INITIAL_DATA, ADD_NEW_PROJECT, REMOVE_PROJECT_FROM_STORE, UPDATE_PROJECT_IN_STORE, SET_LANGUAGE} from "./types";
+import {translations} from '../translations/index';
 
 const initialState = {
-    translations: {
-        English: {
-            home_page_title: 'Welcome in timesheet app',
-            home_page_subtitle: 'Please insert your work data:'
-        },
-        Polski: {
-            home_page_title: 'Witamy w aplikacji do Timesheetów',
-            home_page_subtitle: 'Wprowadź swoje dane:'
-        }
-    },
+    translations: translations,
     selectedLanguage: 'English'
 }
 

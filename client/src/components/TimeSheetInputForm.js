@@ -114,14 +114,14 @@ class TimeSheetInputForm extends React.Component {
     render() {
         return (
                 <FormControl variant="outlined" id="timesheet-input-group">
-                    <InputLabel id="demo-simple-select-outlined-label">Project</InputLabel>
+                    <InputLabel id="demo-simple-select-outlined-label">{this.props.translations.timesheets_list_table_projects}</InputLabel>
                     <Select
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
                         value={this.state._id}
                         error={!this.state.isValidated}
                         onChange={e => this.handleSelect(e)}
-                        label="Project"
+                        label={this.props.translations.timesheets_list_table_projects}
                     >
                         {this.props.projects && this.props.projects.map(project => {
                             return (
@@ -129,9 +129,9 @@ class TimeSheetInputForm extends React.Component {
                             )
                         })}
                     </Select>
-                    <TextField label="Hours" name="hours" value={this.state.data.hours} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
-                    <TextField label="Minutes" name="minutes" value={this.state.data.minutes} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
-                    <TextField label="Pages" name="pages" value={this.state.data.pages} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
+                    <TextField label={this.props.translations.timesheets_list_table_hours} name="hours" value={this.state.data.hours} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
+                    <TextField label={this.props.translations.timesheets_list_table_minutes} name="minutes" value={this.state.data.minutes} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
+                    <TextField label={this.props.translations.timesheets_list_table_pages} name="pages" value={this.state.data.pages} onChange={e => this.handleChange(e)} variant="outlined" type="number" />
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
                             <KeyboardDatePicker
@@ -139,7 +139,7 @@ class TimeSheetInputForm extends React.Component {
                                 variant="inline"
                                 format="yyyy/MM/dd"
                                 margin="normal"
-                                label="Choose date"
+                                label={this.props.translations.datepicker_label}
                                 value={this.state.data.selectedDate}
                                 onChange={this.handleDateChange}
                                 KeyboardButtonProps={{
@@ -149,14 +149,15 @@ class TimeSheetInputForm extends React.Component {
                         </Grid>
                     </MuiPickersUtilsProvider>
                     <Button variant="contained" color="primary" onClick={() => this.handleSubmit()}>
-                        Save
+                        {this.props.translations.timseehts_input_save}
                     </Button>
                     <CustomDialog
                         open={this.state.openModal}
                         handleClose={this.handleClose}
                         cancelOption={false}
-                        title="Timesheet has been submitted"
+                        title={this.props.translations.timesheets_dialog_submitted}
                         description=""
+                        translations={this.props.translations}
                     />
                 </FormControl>
 
