@@ -125,7 +125,7 @@ export default class CustomTable extends React.Component {
                                             value={this.state.temp.description} /> : el.description}</TableCell>
                                     <TableCell>
                                         {this.state.isEditing && el._id === this.state.temp._id &&
-                                        <Button variant="contained" onClick={() => this.handleEdit(el)}>
+                                        <Button variant="outlined" onClick={() => this.handleEdit(el)}>
                                             {this.props.translations.dialog_cancel}
                                         </Button>}
                                         {this.state.isEditing && el._id === this.state.temp._id &&
@@ -134,11 +134,11 @@ export default class CustomTable extends React.Component {
                                         </Button>
                                         }
                                         {!this.state.isEditing &&
-                                        <Button variant="contained" onClick={() => this.handleEdit(el)}>
+                                        <Button variant="contained" color="secondary" onClick={() => this.handleEdit(el)}>
                                             {this.props.translations.project_list_edit_label}
                                         </Button>}
                                         {!this.state.isEditing &&
-                                        <Button variant="contained" color="secondary" onClick={() => this.handleConfirmation(el)}>
+                                        <Button variant="outlined" color="secondary" onClick={() => this.handleConfirmation(el)}>
                                             {this.props.translations.project_list_remove_label}
                                         </Button>
                                         }

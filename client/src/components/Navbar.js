@@ -2,6 +2,7 @@ import {useState} from "react";
 import ProjectsList from '../views/ProjectList';
 import LanguageSwitcher from './LanguageSwitcher';
 import Home from '../views/Home';
+import { connect } from "react-redux";
 
 import {
     BrowserRouter as Router,
@@ -16,7 +17,7 @@ import Statistics from "../views/Statistics";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-export default function Navbar() {
+function Navbar(props) {
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
@@ -27,10 +28,10 @@ export default function Navbar() {
         <Router>
             <div className="navbar">
                 <Tabs value={value} onChange={handleChange}>
-                    <Tab value={0} label="Home" to='/' component={Link} />
-                    <Tab value={1} label="Projects"  to='/projects' component={Link}/>
-                    <Tab value={2} label="Timesheets"  to='/ts-list' component={Link}/>
-                    <Tab value={3} label="Statistics"  to='/statistics' component={Link}/>
+                    <Tab value={0} label={props.translations.menu_home} to='/' component={Link} />
+                    <Tab value={1} label={props.translations.menu_projects}  to='/projects' component={Link}/>
+                    <Tab value={2} label={props.translations.menu_timesheets}  to='/ts-list' component={Link}/>
+                    <Tab value={3} label={props.translations.menu_stats}  to='/statistics' component={Link}/>
                     <LanguageSwitcher />
                 </Tabs>
             </div>
@@ -43,3 +44,11 @@ export default function Navbar() {
         </Router>
     )
 }
+
+const mapStateToProps = state => {
+    return {
+        translations: state.translations[state.selectedLanguage]
+    }
+}
+
+export default connect(mapStateToProps, null)(Navbar)

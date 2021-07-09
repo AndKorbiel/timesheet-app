@@ -31,7 +31,11 @@ export const translations = {
         project_list_edit_label: 'Edit',
         project_list_remove_label: 'Remove',
         datepicker_label: 'Choose date',
-        statistics_table_header: ["Date"]
+        statistics_table_header: ["Date"],
+        menu_home: 'Home',
+        menu_projects: 'Projects',
+        menu_timesheets: 'Timesheets',
+        menu_stats: 'Statistics'
     },
     Polski: {
         home_page_title: 'Witamy w aplikacji do Timesheetów',
@@ -65,6 +69,10 @@ export const translations = {
         project_list_edit_label: 'Edytuj',
         project_list_remove_label: 'Usuń',
         datepicker_label: 'Wybierz datę',
-        statistics_table_header: ["Data"]
+        statistics_table_header: ["Data"],
+        menu_home: 'Strona główna',
+        menu_projects: 'Projekty',
+        menu_timesheets: 'Timesheety',
+        menu_stats: 'Statystyki'
     }
 }

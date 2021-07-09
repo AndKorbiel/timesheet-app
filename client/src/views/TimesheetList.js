@@ -135,7 +135,8 @@ function TimeSheetList(props) {
                                                                     {formatDate(timesheet.selectedDate)}
                                                                 </TableCell>
                                                                 <TableCell>
-                                                                    <Button variant="contained" color="secondary" onClick={() => handleConfrimation( timesheet, project)}>
+                                                                    <Button variant="outlined" color="secondary"
+                                                                            onClick={() => handleConfrimation(timesheet, project)}>
                                                                         {props.translations.timesheets_list_table_remove}
                                                                     </Button>
                                                                 </TableCell>

@@ -103,12 +103,12 @@ class Statistics extends React.Component {
                                         {this.state.filters && this.state.filters.map(filter => {
                                             return (
                                                 <>
-                                                    <TableRow>
+                                                    <TableRow className="title-row">
                                                         <TableCell colSpan={5}>
                                                             {filter}
                                                         </TableCell>
                                                     </TableRow>
-                                                    <TableRow>
+                                                    <TableRow className="inner-header">
                                                         <TableCell></TableCell>
                                                         <TableCell>{this.props.translations.timesheets_list_table_project_name_label}</TableCell>
                                                         <TableCell>{this.props.translations.timesheets_list_table_hours}</TableCell>

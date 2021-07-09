@@ -23,7 +23,7 @@ function LanguageSwitcher(props) {
 
 
     return (
-        <FormControlLabel
+        <FormControlLabel className="lang-switch"
             control={<Switch checked={isChecked} onChange={handleChange} name="lang"/>}
             label={selectedLang}
         />
