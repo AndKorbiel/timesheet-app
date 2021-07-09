@@ -56,9 +56,12 @@ class Statistics extends React.Component {
     }
 
     generateList = list => {
-        let tsList = {}
+        let tsList = {};
+        let filters = [];
+        let years = [];
+        let months = [];
+        let sorted = {}
 
-        let filters = []
         list.forEach(el => {
             el.timesheets.forEach(timesheet => {
                 if (filters.indexOf(this.formatDate(timesheet.selectedDate)) < 0 && this.formatDate(timesheet.selectedDate).length > 1) {
@@ -66,6 +69,16 @@ class Statistics extends React.Component {
                 }
             })
         })
+
+        filters.forEach(filter => {
+            if (years.indexOf(filter.substring(0,4)) < 0) {
+                years.push(filter.substring(0,4))
+            }
+            if (months.indexOf(filter.substring(5,7)) < 0) {
+                months.push(filter.substring(5,7))
+            }
+        })
+
         filters.forEach(filter => {
             let temp = [];
             list.forEach(listEl => {
@@ -78,6 +91,59 @@ class Statistics extends React.Component {
             })
         })
         const state = {filters: filters, tsList: tsList};
+
+        let sortedbyYears = {}
+        let sortedByMonths = {}
+
+        months.forEach(month => {
+            let temp = []
+            for (let [key, value] of Object.entries(tsList)) {
+                value.forEach(entry => {
+                    if (key.substring(5,7) === month) {
+                        temp.push(entry)
+                    }
+                })
+
+            }
+            sortedByMonths[month] = temp
+        })
+
+        years.forEach(year => {
+            let temp = []
+            for (let [key, value] of Object.entries(sortedByMonths)) {
+                value.forEach(timesheet => {
+                    if (timesheet.timesheet.selectedDate.substring(0,4) === year) {
+                        temp.push(timesheet)
+                    }
+                })
+
+            }
+            sortedbyYears[year] = temp
+        })
+
+        let final = {}
+        years.forEach(year => {
+            final[year] = sortedByMonths
+        })
+
+        for (let [key, value] of Object.entries(sortedbyYears)) {
+            months.forEach(month => {
+                let temp = []
+                for (let [key, value] of Object.entries(tsList)) {
+                    value.forEach(entry => {
+                        if (key.substring(5,7) === month) {
+                            temp.push(entry)
+                        }
+                    })
+
+                }
+                sortedbyYears[key][month] = temp
+            })
+        }
+        console.log(sortedbyYears)
+
+
+
         return state
     }
 

@@ -94,7 +94,7 @@ function TimeSheetList(props) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {props.projectsList && props.projectsList.map((project, index) => {
+                                    {props.projectsList && props.projectsList.slice().reverse().map((project, index) => {
                                             return (
                                                 <>
                                                     <TableRow key={index + 1} className="title-row">
@@ -118,7 +118,7 @@ function TimeSheetList(props) {
                                                         <TableCell>{props.translations.timesheets_list_table_edit}</TableCell>
                                                     </TableRow>
                                                     }
-                                                    {project.timesheets.map((timesheet, j) => {
+                                                    {project.timesheets.sort((a, b) => b.selectedDate.localeCompare(a.selectedDate)) && project.timesheets.map((timesheet, j) => {
                                                         return (
                                                             <TableRow key={j + 1}>
                                                                 <TableCell></TableCell>

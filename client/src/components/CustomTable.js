@@ -101,7 +101,7 @@ export default class CustomTable extends React.Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.props.list.map((el, index) => {
+                        {this.props.list.sort((a, b) => a.title.localeCompare(b.title)).map((el, index) => {
                             return (
                                 <TableRow key={index + 1}>
                                     <TableCell component="th" scope="row">

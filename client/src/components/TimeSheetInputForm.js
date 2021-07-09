@@ -123,7 +123,7 @@ class TimeSheetInputForm extends React.Component {
                         onChange={e => this.handleSelect(e)}
                         label={this.props.translations.timesheets_list_table_projects}
                     >
-                        {this.props.projects && this.props.projects.map(project => {
+                        {this.props.projects && this.props.projects.sort((a, b) => a.title.localeCompare(b.title)).map(project => {
                             return (
                                 <MenuItem value={project._id} key={project._id}>{project.title}</MenuItem>
                             )
