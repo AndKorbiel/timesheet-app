@@ -139,32 +139,13 @@ class Statistics extends React.Component {
             for (let [innerKey, innerValue] of Object.entries(value)) {
                 if (innerValue.length === 0) {
                     delete filtered[key][innerKey]
-                } else {
-                    let filters = []
-                    innerValue.forEach(el => {
-                        if (filters.indexOf(this.formatDate(el.timesheet.selectedDate)) < 0 && this.formatDate(el.timesheet.selectedDate).length > 1) {
-                            filters.push(this.formatDate(el.timesheet.selectedDate))
-                        }
-                    })
-                    filters.forEach(el => {
-                        innerValue[el] = []
-                    })
-
-                    filters.forEach(filter => {
-                        let temp = [];
-                        innerValue.forEach(listEl => {
-                            if (this.formatDate(listEl.timesheet.selectedDate) === filter) {
-                                temp.push({project: listEl, timesheet: listEl.timesheet})
-                            }
-                            innerValue[filter] = temp;
-                        })
-                    })
                 }
-
             }
         }
         console.log(filtered)
-        const state = {filters: filters, tsList: filtered};
+        console.log(tsList)
+        const state = {filters: filters, tsList: tsList};
+
 
         return state
     }
@@ -187,61 +168,56 @@ class Statistics extends React.Component {
                                             </TableCell>
                                         </TableRow>
                                     </TableHead>
-                                    {this.state.tsList && Object.entries(this.state.tsList).map(([key, value]) => {
-                                        return (
-                                            <TableBody>
-                                                <TableRow className="inner-header">
-                                                    <TableCell colSpan={5}>
-                                                        {key}
-                                                    </TableCell>
-                                                </TableRow>
+                                    <TableBody>
+                                        {this.state.filters && this.state.filters.map(filter => {
+                                            return (
                                                 <>
-                                                    {Object.entries(value).map(([innerKey, innerValue]) => {
-
+                                                    <TableRow className="title-row">
+                                                        <TableCell colSpan={5}>
+                                                            {filter}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                    <TableRow className="inner-header">
+                                                        <TableCell></TableCell>
+                                                        <TableCell>{this.props.translations.timesheets_list_table_project_name_label}</TableCell>
+                                                        <TableCell>{this.props.translations.timesheets_list_table_hours}</TableCell>
+                                                        <TableCell>{this.props.translations.timesheets_list_table_minutes}</TableCell>
+                                                        <TableCell>{this.props.translations.timesheets_list_table_pages}</TableCell>
+                                                    </TableRow>
+                                                    {this.state.tsList[filter].map(timesheet => {
                                                         return (
-                                                            <>
-                                                                <TableRow className="title-row">
-                                                                    <TableCell colSpan={5}>
-                                                                        {innerKey}
-                                                                    </TableCell>
-                                                                </TableRow>
-                                                                <TableRow className="inner-header">
-                                                                    <TableCell></TableCell>
-                                                                    <TableCell>{this.props.translations.timesheets_list_table_project_name_label}</TableCell>
-                                                                    <TableCell>{this.props.translations.timesheets_list_table_hours}</TableCell>
-                                                                    <TableCell>{this.props.translations.timesheets_list_table_minutes}</TableCell>
-                                                                    <TableCell>{this.props.translations.timesheets_list_table_pages}</TableCell>
-                                                                </TableRow>
-                                                                {innerValue.map(timesheet => {
-                                                                    return (
-                                                                        <TableRow>
-                                                                            {/*<TableCell>*/}
-                                                                            {/*    {this.formatDate(timesheet.timesheet.selectedDate)}*/}
-                                                                            {/*</TableCell>*/}
-                                                                            {/*<TableCell>*/}
-                                                                            {/*    {timesheet.project.title}*/}
-                                                                            {/*</TableCell>*/}
-                                                                            {/*<TableCell>*/}
-                                                                            {/*    {timesheet.timesheet.hours}*/}
-                                                                            {/*</TableCell>*/}
-                                                                            {/*<TableCell>*/}
-                                                                            {/*    {timesheet.timesheet.minutes}*/}
-                                                                            {/*</TableCell>*/}
-                                                                            {/*<TableCell>*/}
-                                                                            {/*    {timesheet.timesheet.pages}*/}
-                                                                            {/*</TableCell>*/}
-                                                                            <TableCell>
-                                                                            </TableCell>
-                                                                        </TableRow>
-                                                                    )
-                                                                })}
-                                                            </>
+                                                            <TableRow>
+                                                                <TableCell></TableCell>
+                                                                <TableCell>
+                                                                    {timesheet.project.title}
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {timesheet.timesheet.hours}
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {timesheet.timesheet.minutes}
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {timesheet.timesheet.pages}
+                                                                </TableCell>
+                                                            </TableRow>
                                                         )
                                                     })}
+                                                    <TableRow className="subtotal">
+                                                        <TableCell></TableCell>
+                                                        <TableCell>{this.props.translations.timesheets_list_table_name}</TableCell>
+                                                        <TableCell colSpan={2}>
+                                                            {this.calculateTotalTime(this.state.tsList[filter])} {this.props.translations.timesheets_list_table_hours}
+                                                        </TableCell>
+                                                        <TableCell colSpan={2}>
+                                                            {this.calculateTotal(this.state.tsList[filter], 'pages')} {this.props.translations.timesheets_list_table_pages}
+                                                        </TableCell>
+                                                    </TableRow>
                                                 </>
-                                            </TableBody>
-                                        )
-                                    })}
+                                            )
+                                        })}
+                                    </TableBody>
+
                                 </Table>
                             </TableContainer>
                         </Paper>
