@@ -135,6 +135,7 @@ class Statistics extends React.Component {
             filtered[key] = temp
         }
 
+
         for (let [key, value] of Object.entries(filtered)) {
             for (let [innerKey, innerValue] of Object.entries(value)) {
                 if (innerValue.length === 0) {
@@ -163,6 +164,17 @@ class Statistics extends React.Component {
 
             }
         }
+
+        for (let [key, value] of Object.entries(filtered)) {
+            for (let [innerKey, innerValue] of Object.entries(value)) {
+                for (let [nKey, nValue] of Object.entries(innerValue)) {
+                    if (nKey.length < 3) {
+                        delete innerValue[nKey]
+                    }
+                }
+            }
+        }
+
         console.log(filtered)
         const state = {filters: filters, tsList: filtered};
 
@@ -197,7 +209,6 @@ class Statistics extends React.Component {
                                                 </TableRow>
                                                 <>
                                                     {Object.entries(value).map(([innerKey, innerValue]) => {
-
                                                         return (
                                                             <>
                                                                 <TableRow className="title-row">
@@ -212,27 +223,35 @@ class Statistics extends React.Component {
                                                                     <TableCell>{this.props.translations.timesheets_list_table_minutes}</TableCell>
                                                                     <TableCell>{this.props.translations.timesheets_list_table_pages}</TableCell>
                                                                 </TableRow>
-                                                                {innerValue.map(timesheet => {
+                                                                {Object.entries(innerValue).map(([nKey, nValue]) => {
                                                                     return (
+                                                                        <>
                                                                         <TableRow>
-                                                                            {/*<TableCell>*/}
-                                                                            {/*    {this.formatDate(timesheet.timesheet.selectedDate)}*/}
-                                                                            {/*</TableCell>*/}
-                                                                            {/*<TableCell>*/}
-                                                                            {/*    {timesheet.project.title}*/}
-                                                                            {/*</TableCell>*/}
-                                                                            {/*<TableCell>*/}
-                                                                            {/*    {timesheet.timesheet.hours}*/}
-                                                                            {/*</TableCell>*/}
-                                                                            {/*<TableCell>*/}
-                                                                            {/*    {timesheet.timesheet.minutes}*/}
-                                                                            {/*</TableCell>*/}
-                                                                            {/*<TableCell>*/}
-                                                                            {/*    {timesheet.timesheet.pages}*/}
-                                                                            {/*</TableCell>*/}
                                                                             <TableCell>
+                                                                                {nKey}
                                                                             </TableCell>
                                                                         </TableRow>
+                                                                            {nValue.map(element => {
+                                                                                return (
+                                                                                    <TableRow>
+                                                                                        <TableCell></TableCell>
+                                                                                        <TableCell>
+                                                                                            {element.project.project.title}
+                                                                                        </TableCell>
+                                                                                        <TableCell>
+                                                                                            {element.timesheet.hours}
+                                                                                        </TableCell>
+                                                                                        <TableCell>
+                                                                                            {element.timesheet.minutes}
+                                                                                        </TableCell>
+                                                                                        <TableCell>
+                                                                                            {element.timesheet.pages}
+                                                                                        </TableCell>
+                                                                                    </TableRow>
+                                                                                )
+                                                                            })}
+
+                                                                        </>
                                                                     )
                                                                 })}
                                                             </>
