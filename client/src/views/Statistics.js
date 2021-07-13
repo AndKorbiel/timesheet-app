@@ -1,15 +1,21 @@
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {getAllProjectsEffect} from "../redux/effects";
 import {connect} from "react-redux";
+
+// material-ui
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 
 class Statistics extends React.Component {
     state = {}
@@ -53,6 +59,22 @@ class Statistics extends React.Component {
             }
         })
         return temp.toFixed(1)
+    }
+
+    calculateMonthTotalTime = (innerKey, innerValue) => {
+        let temp = 0;
+        Object.entries(innerValue).map(([key, value]) => {
+            temp = temp + parseFloat(this.calculateTotalTime(value))
+        })
+        return temp
+    }
+
+    calculateMonthTotalPages = (innerKey, innerValue) => {
+        let temp = 0;
+        Object.entries(innerValue).map(([key, value]) => {
+            temp = temp + parseFloat(this.calculateTotal(value, 'pages'))
+        })
+        return temp
     }
 
     generateList = list => {
@@ -211,49 +233,68 @@ class Statistics extends React.Component {
                                                     {Object.entries(value).map(([innerKey, innerValue]) => {
                                                         return (
                                                             <>
-                                                                <TableRow className="title-row">
-                                                                    <TableCell colSpan={5}>
-                                                                        {innerKey}
-                                                                    </TableCell>
-                                                                </TableRow>
-                                                                <TableRow className="inner-header">
-                                                                    <TableCell></TableCell>
-                                                                    <TableCell>{this.props.translations.timesheets_list_table_project_name_label}</TableCell>
-                                                                    <TableCell>{this.props.translations.timesheets_list_table_hours}</TableCell>
-                                                                    <TableCell>{this.props.translations.timesheets_list_table_minutes}</TableCell>
-                                                                    <TableCell>{this.props.translations.timesheets_list_table_pages}</TableCell>
-                                                                </TableRow>
-                                                                {Object.entries(innerValue).map(([nKey, nValue]) => {
-                                                                    return (
-                                                                        <>
-                                                                        <TableRow>
+                                                                <Accordion>
+                                                                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
+                                                                        <TableRow className="title-row">
+                                                                            <TableCell colSpan={5}>
+                                                                                {this.props.translations.months[parseInt(innerKey - 1)]}
+                                                                            </TableCell>
                                                                             <TableCell>
-                                                                                {nKey}
+                                                                                {this.calculateMonthTotalTime(innerKey, innerValue)} {this.props.translations.timesheets_list_table_hours}
+                                                                            </TableCell>
+                                                                            <TableCell>
+                                                                                {this.calculateMonthTotalPages(innerKey, innerValue)} {this.props.translations.timesheets_list_table_pages}
                                                                             </TableCell>
                                                                         </TableRow>
-                                                                            {nValue.map(element => {
-                                                                                return (
-                                                                                    <TableRow>
-                                                                                        <TableCell></TableCell>
-                                                                                        <TableCell>
-                                                                                            {element.project.project.title}
-                                                                                        </TableCell>
-                                                                                        <TableCell>
-                                                                                            {element.timesheet.hours}
-                                                                                        </TableCell>
-                                                                                        <TableCell>
-                                                                                            {element.timesheet.minutes}
-                                                                                        </TableCell>
-                                                                                        <TableCell>
-                                                                                            {element.timesheet.pages}
-                                                                                        </TableCell>
-                                                                                    </TableRow>
-                                                                                )
-                                                                            })}
-
-                                                                        </>
-                                                                    )
-                                                                })}
+                                                                    </AccordionSummary>
+                                                                    {Object.entries(innerValue).map(([nKey, nValue]) => {
+                                                                        return (
+                                                                            <Table>
+                                                                                <TableRow>
+                                                                                    <TableCell className="day-cell">
+                                                                                        {nKey}
+                                                                                    </TableCell>
+                                                                                </TableRow>
+                                                                                <TableRow className="inner-header">
+                                                                                    <TableCell></TableCell>
+                                                                                    <TableCell>{this.props.translations.timesheets_list_table_project_name_label}</TableCell>
+                                                                                    <TableCell>{this.props.translations.timesheets_list_table_hours}</TableCell>
+                                                                                    <TableCell>{this.props.translations.timesheets_list_table_minutes}</TableCell>
+                                                                                    <TableCell>{this.props.translations.timesheets_list_table_pages}</TableCell>
+                                                                                </TableRow>
+                                                                                {nValue.map(element => {
+                                                                                    return (
+                                                                                        <TableRow>
+                                                                                            <TableCell></TableCell>
+                                                                                            <TableCell>
+                                                                                                {element.project.project.title}
+                                                                                            </TableCell>
+                                                                                            <TableCell>
+                                                                                                {element.timesheet.hours}
+                                                                                            </TableCell>
+                                                                                            <TableCell>
+                                                                                                {element.timesheet.minutes}
+                                                                                            </TableCell>
+                                                                                            <TableCell>
+                                                                                                {element.timesheet.pages}
+                                                                                            </TableCell>
+                                                                                        </TableRow>
+                                                                                    )
+                                                                                })}
+                                                                                <TableRow className="subtotal">
+                                                                                    <TableCell></TableCell>
+                                                                                    <TableCell>{this.props.translations.timesheets_list_table_name}</TableCell>
+                                                                                    <TableCell colSpan={2}>
+                                                                                        {this.calculateTotalTime(nValue)} {this.props.translations.timesheets_list_table_hours}
+                                                                                    </TableCell>
+                                                                                    <TableCell colSpan={2}>
+                                                                                        {this.calculateTotal(nValue, 'pages')} {this.props.translations.timesheets_list_table_pages}
+                                                                                    </TableCell>
+                                                                                </TableRow>
+                                                                            </Table>
+                                                                        )
+                                                                    })}
+                                                                </Accordion>
                                                             </>
                                                         )
                                                     })}

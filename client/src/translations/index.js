@@ -35,7 +35,8 @@ export const translations = {
         menu_home: 'Home',
         menu_projects: 'Projects',
         menu_timesheets: 'Timesheets',
-        menu_stats: 'Statistics'
+        menu_stats: 'Statistics',
+        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     },
     Polski: {
         home_page_title: 'Witamy w aplikacji do Timesheetów',
@@ -73,6 +74,7 @@ export const translations = {
         menu_home: 'Strona główna',
         menu_projects: 'Projekty',
         menu_timesheets: 'Timesheety',
-        menu_stats: 'Statystyki'
+        menu_stats: 'Statystyki',
+        months: ['Styczeń', 'Luty', 'Marzec', 'Kwieceń', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień']
     }
 }

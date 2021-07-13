@@ -85,6 +85,7 @@
 
     .MuiTableCell-root {
       font-style: italic;
+      font-weight: bold;
     }
   }
 
@@ -95,6 +96,42 @@
   .MuiButton-containedSecondary {
     box-shadow: none;
     margin: 0 2px;
+  }
+
+  .MuiAccordion-rounded {
+    margin-left: 60px;
+
+    .title-row .MuiTableCell-root {
+      border: 0;
+      min-width: 150px;
+    }
+
+    .MuiAccordionSummary-content {
+      margin: 0;
+    }
+
+    .MuiTableRow-root {
+      width: 100%;
+    }
+
+    .MuiAccordionSummary-root {
+      border-bottom: 1px solid #f2f2f2;
+    }
+
+    .MuiAccordionSummary-root.Mui-expanded {
+      min-height: 48px;
+    }
+  }
+  .MuiAccordion-root.Mui-expanded {
+    margin-left: 60px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .day-cell {
+    background: #e6edce;
+    font-weight: bold;
+    padding-left: 34px;
   }
 }
 

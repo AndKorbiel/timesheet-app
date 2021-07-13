@@ -1560,6 +1560,13 @@
     "prop-types" "^15.7.2"
     "reselect" "^4.0.0"
 
+"@material-ui/icons@^4.11.2":
+  "integrity" "sha512-fQNsKX2TxBmqIGJCSi3tGTO/gZ+eJgWmMJkgDiOfyNaunNaxcklJQFaFogYcFl0qFuaEz1qaXYXboa/bUXVSOQ=="
+  "resolved" "https://registry.npmjs.org/@material-ui/icons/-/icons-4.11.2.tgz"
+  "version" "4.11.2"
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+
 "@material-ui/pickers@^3.3.10":
   "integrity" "sha512-hS4pxwn1ZGXVkmgD4tpFpaumUaAg2ZzbTrxltfC5yPw4BJV+mGkfnQOB4VpWEYZw2jv65Z0wLwDE/piQiPPZ3w=="
   "resolved" "https://registry.yarnpkg.com/@material-ui/pickers/-/pickers-3.3.10.tgz"
