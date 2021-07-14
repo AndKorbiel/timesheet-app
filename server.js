@@ -17,7 +17,9 @@ db.once('open', () => {
 
 // routes
 const projects = require('./server/routes/projects.route');
+const users = require('./server/routes/user.route');
 app.use('/projects/', projects);
+app.use('/users/', users);
 
 app.listen(port, () => {
   console.log('App listening on port: ' + port)

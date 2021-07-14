@@ -1,4 +1,4 @@
-import { addInitialData, addNewProject, removeProjectFromStore, updateProjectInStore } from './actions';
+import { addInitialData, addNewProject, removeProjectFromStore, updateProjectInStore, handleLogin } from './actions';
 
 export const getAllProjectsEffect = () => {
     return dispatch => {
@@ -79,7 +79,6 @@ export const sendTimesheetEffect = project => {
 }
 
 export const updateTimesheetEffect = project => {
-    console.log(project)
     return dispatch => {
         fetch('/projects/update-ts', {
             method: "PUT",
@@ -92,6 +91,28 @@ export const updateTimesheetEffect = project => {
             .then(res => res.json())
             .then(data => {
                 dispatch(updateProjectInStore(data))
+            })
+            .catch(err => console.log(err))
+    }
+}
+
+export const loginEffect = data => {
+    return dispatch => {
+        fetch('/users/login', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.isSuccess) {
+                    sessionStorage.setItem("ts-app", "loggedIn");
+                }
+                dispatch(handleLogin(data))
             })
             .catch(err => console.log(err))
     }

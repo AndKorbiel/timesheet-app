@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import './styles/App.scss';
+import LoginForm from "./components/LoginForm";
 
 const theme = createMuiTheme({
     palette: {
@@ -23,6 +24,7 @@ class App extends React.Component {
             <MuiThemeProvider theme={theme}>
                 <div className="App">
                     <Navbar />
+                    <LoginForm />
                 </div>
             </MuiThemeProvider>
 

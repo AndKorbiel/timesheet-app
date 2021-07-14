@@ -1,9 +1,11 @@
-import {ADD_INITIAL_DATA, ADD_NEW_PROJECT, REMOVE_PROJECT_FROM_STORE, UPDATE_PROJECT_IN_STORE, SET_LANGUAGE} from "./types";
+import {ADD_INITIAL_DATA, ADD_NEW_PROJECT, REMOVE_PROJECT_FROM_STORE, UPDATE_PROJECT_IN_STORE, SET_LANGUAGE, LOG_IN} from "./types";
 import {translations} from '../translations/index';
 
 const initialState = {
     translations: translations,
-    selectedLanguage: 'English'
+    selectedLanguage: 'English',
+    isLoggedIn: false,
+    loginMessage: ''
 }
 
 export default function MainReducer(state = initialState, action) {
@@ -45,6 +47,12 @@ export default function MainReducer(state = initialState, action) {
             return {
                 ...state,
                 selectedLanguage: action.payload
+            }
+        case LOG_IN:
+            return {
+                ...state,
+                isLoggedIn: action.payload.isSuccess,
+                loginMessage: action.payload.loginMessage
             }
         default:
             return state

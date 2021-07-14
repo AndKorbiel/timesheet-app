@@ -1,4 +1,4 @@
-import { ADD_NEW_PROJECT, ADD_INITIAL_DATA, REMOVE_PROJECT_FROM_STORE, UPDATE_PROJECT_IN_STORE, SET_LANGUAGE } from "./types";
+import { ADD_NEW_PROJECT, ADD_INITIAL_DATA, REMOVE_PROJECT_FROM_STORE, UPDATE_PROJECT_IN_STORE, SET_LANGUAGE, LOG_IN } from "./types";
 
 export function addNewProject(project) {
     return {
@@ -32,5 +32,12 @@ export function setLanguage(language) {
     return {
         type: SET_LANGUAGE,
         payload: language
+    }
+}
+
+export function handleLogin(data) {
+    return {
+        type: LOG_IN,
+        payload: data
     }
 }
