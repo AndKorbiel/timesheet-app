@@ -4,10 +4,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
 const port = process.env.PORT || 8999;
+const path = require('path');
 
 const db = mongoose.connection;
 const user = process.env.DB_USER;
 const pass = process.env.DB_PASSWORD;
+
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 const MONGODB_URI =  `mongodb+srv://${user}:${pass}@node-test.cotft.mongodb.net/timesheets?retryWrites=true&w=majority`;
 
