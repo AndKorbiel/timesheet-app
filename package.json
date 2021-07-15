@@ -1,7 +1,10 @@
 {
   "name": "timesheet-app",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "engines": {
+    "node": "12.16.1",
+    "npm": "6.13.4"
+  },
   "main": "server.js",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -15,7 +18,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "nodem server.js",
+    "dev-stage-run": "cd client && npm run start",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
