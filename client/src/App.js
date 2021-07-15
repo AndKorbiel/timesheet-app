@@ -27,7 +27,6 @@ class App extends React.Component {
                     <LoginForm />
                 </div>
             </MuiThemeProvider>
-
         );
     }
 }

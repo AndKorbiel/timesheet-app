@@ -108,7 +108,6 @@ export const loginEffect = data => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if (data.isSuccess) {
                     sessionStorage.setItem("ts-app", "loggedIn");
                 }

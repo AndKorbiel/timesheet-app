@@ -9,23 +9,26 @@ import TimeSheetInputForm from "../components/TimeSheetInputForm";
 function Home(props) {
     return (
         <Container fixed id="main">
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <Paper className="app-main">
-                        <h1>{props.translations.home_page_title}</h1>
-                        <hr />
-                        <h2>{props.translations.home_page_subtitle}</h2>
-                        <TimeSheetInputForm translations={props.translations} />
-                    </Paper>
+            {props.isLoggedIn &&
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <Paper className="app-main">
+                            <h1>{props.translations.home_page_title}</h1>
+                            <hr />
+                            <h2>{props.translations.home_page_subtitle}</h2>
+                            <TimeSheetInputForm translations={props.translations} />
+                        </Paper>
+                    </Grid>
                 </Grid>
-            </Grid>
+            }
         </Container>
     )
 }
 
 const mapStateToProps = state => {
     return {
-        translations: state.translations[state.selectedLanguage]
+        translations: state.translations[state.selectedLanguage],
+        isLoggedIn: state.isLoggedIn
     }
 }
 

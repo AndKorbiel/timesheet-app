@@ -75,7 +75,8 @@ function TimeSheetList(props) {
 
     return (
         <Container fixed id="main">
-            <Grid container spacing={3}>
+            {props.isLoggedIn &&
+                <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Paper className="app-main">
                         <h1>{props.translations.timesheets_list_title}</h1>
@@ -171,6 +172,7 @@ function TimeSheetList(props) {
                     </Paper>
                 </Grid>
             </Grid>
+            }
         </Container>
     )
 }
@@ -178,7 +180,8 @@ function TimeSheetList(props) {
 const mapStateToProps = state => {
     return {
         projectsList: state.projectsList,
-        translations: state.translations[state.selectedLanguage]
+        translations: state.translations[state.selectedLanguage],
+        isLoggedIn: state.isLoggedIn
     }
 }
 
