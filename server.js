@@ -10,8 +10,6 @@ const db = mongoose.connection;
 const user = process.env.DB_USER;
 const pass = process.env.DB_PASSWORD;
 
-app.use(express.static(path.join(__dirname, 'client/build')));
-
 const MONGODB_URI =  `mongodb+srv://${user}:${pass}@node-test.cotft.mongodb.net/timesheets?retryWrites=true&w=majority`;
 
 app.use(bodyParser.json());
@@ -28,6 +26,14 @@ const projects = require('./server/routes/projects.route');
 const users = require('./server/routes/user.route');
 app.use('/projects/', projects);
 app.use('/users/', users);
+
+// production mode
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
+}
 
 app.listen(port, () => {
   console.log('App listening on port: ' + port)
