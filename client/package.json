@@ -2,10 +2,6 @@
   "name": "timesheet-app",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "12.16.1",
-    "npm": "6.13.4"
-  },
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
     "@date-io/moment": "^1.3.13",
