@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const app = express();
 const port = process.env.PORT || 8999;
 const path = require('path');
-
 const db = mongoose.connection;
 const user = process.env.DB_USER;
 const pass = process.env.DB_PASSWORD;
@@ -28,12 +27,7 @@ app.use('/projects/', projects);
 app.use('/users/', users);
 
 // production mode
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-  })
-}
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.listen(port, () => {
   console.log('App listening on port: ' + port)
