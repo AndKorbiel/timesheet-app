@@ -9,7 +9,7 @@ const db = mongoose.connection;
 const user = process.env.DB_USER;
 const pass = process.env.DB_PASSWORD;
 
-const MONGODB_URI = `mongodb+srv://${user}:${pass}@node-test.cotft.mongodb.net/timesheets?retryWrites=true&w=majority`;
+const MONGODB_URI = process.env.MONGODB_URI || `mongodb+srv://${user}:${pass}@node-test.cotft.mongodb.net/timesheets?retryWrites=true&w=majority`;
 
 app.use(bodyParser.json());
 
