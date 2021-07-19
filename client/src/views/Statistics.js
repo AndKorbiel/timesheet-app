@@ -197,7 +197,6 @@ class Statistics extends React.Component {
             }
         }
 
-        console.log(filtered)
         const state = {filters: filters, tsList: filtered};
 
         return state

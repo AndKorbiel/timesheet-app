@@ -36,7 +36,14 @@ export const translations = {
         menu_projects: 'Projects',
         menu_timesheets: 'Timesheets',
         menu_stats: 'Statistics',
-        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        menu_calc: 'Calculator',
+        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        calculator_page_title: 'Pages calculator',
+        calculator_page_subtitle: 'Paste the text into the field and see its size in normalized pages',
+        calculator_label: 'Paste or start typing here',
+        calculator_label_pages: 'Pages:',
+        calculator_label_chars: 'Characters:',
+        calculator_label_clear: 'Clear'
     },
     Polski: {
         home_page_title: 'Witamy w aplikacji do Timesheetów',
@@ -75,6 +82,13 @@ export const translations = {
         menu_projects: 'Projekty',
         menu_timesheets: 'Timesheety',
         menu_stats: 'Statystyki',
-        months: ['Styczeń', 'Luty', 'Marzec', 'Kwieceń', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień']
+        menu_calc: 'Kalkulator',
+        months: ['Styczeń', 'Luty', 'Marzec', 'Kwieceń', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
+        calculator_page_title: 'Kalkulator stron',
+        calculator_page_subtitle: 'Wklej tekst w pole i sprawdź jaka jest jego objętość w znormalizowanych stronach',
+        calculator_label: 'Tutaj wklej lub wprowadź tekst',
+        calculator_label_pages: 'Stron:',
+        calculator_label_chars: 'Znaków:',
+        calculator_label_clear: 'Wyczyść'
     }
 }

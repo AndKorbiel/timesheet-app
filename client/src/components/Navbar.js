@@ -1,6 +1,7 @@
 import {useState} from "react";
 import ProjectsList from '../views/ProjectList';
 import LanguageSwitcher from './LanguageSwitcher';
+import Calculator from '../views/Calculator';
 import Home from '../views/Home';
 import { connect } from "react-redux";
 
@@ -32,6 +33,7 @@ function Navbar(props) {
                     <Tab value={1} label={props.translations.menu_projects}  to='/projects' component={Link}/>
                     <Tab value={2} label={props.translations.menu_timesheets}  to='/ts-list' component={Link}/>
                     <Tab value={3} label={props.translations.menu_stats}  to='/statistics' component={Link}/>
+                    <Tab value={4} label={props.translations.menu_calc}  to='/calculator' component={Link}/>
                     <LanguageSwitcher />
                 </Tabs>
             </div>
@@ -40,6 +42,7 @@ function Navbar(props) {
                 <Route path="/projects" component={ProjectsList} />
                 <Route path="/ts-list" component={TimeSheetList} />
                 <Route path="/statistics" component={Statistics} />
+                <Route path="/calculator" component={Calculator} />
             </Switch>
         </Router>
     )

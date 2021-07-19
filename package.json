@@ -17,7 +17,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "server": "nodemon server.js",
+    "dev-start": "set NODE_ENV=development && nodemon server.js",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
