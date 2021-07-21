@@ -2,6 +2,7 @@ import Container from "@material-ui/core/Container";
 import React from "react";
 import {getAllProjectsEffect} from "../redux/effects";
 import {connect} from "react-redux";
+import Charts from '../components/Charts';
 
 // material-ui
 import Grid from "@material-ui/core/Grid";
@@ -18,7 +19,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 class Statistics extends React.Component {
-    state = {}
+    state = {
+        data: []
+    }
 
     componentDidMount() {
         this.props.getData()
@@ -303,6 +306,17 @@ class Statistics extends React.Component {
                                     })}
                                 </Table>
                             </TableContainer>
+                            {this.state.tsList &&
+                                <div>
+                                    <Charts
+                                        data={this.state.tsList}
+                                        calculateMonthTotalPages={this.calculateMonthTotalPages}
+                                        calculateTotal={this.calculateTotal}
+                                        translations={this.props.translations}
+                                        title="Pages per moth"
+                                    />
+                                </div>
+                            }
                         </Paper>
                     </Grid>
                 </Grid>
