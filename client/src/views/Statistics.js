@@ -202,6 +202,8 @@ class Statistics extends React.Component {
 
         const state = {filters: filters, tsList: filtered};
 
+        console.log(filtered)
+
         return state
     }
 
@@ -232,7 +234,7 @@ class Statistics extends React.Component {
                                                     </TableCell>
                                                 </TableRow>
                                                 <>
-                                                    {Object.entries(value).map(([innerKey, innerValue]) => {
+                                                    {Object.entries(value).sort().map(([innerKey, innerValue]) => {
                                                         return (
                                                             <>
                                                                 <Accordion>
@@ -249,7 +251,7 @@ class Statistics extends React.Component {
                                                                             </TableCell>
                                                                         </TableRow>
                                                                     </AccordionSummary>
-                                                                    {Object.entries(innerValue).map(([nKey, nValue]) => {
+                                                                    {Object.entries(innerValue).sort().map(([nKey, nValue]) => {
                                                                         return (
                                                                             <Table>
                                                                                 <TableRow>

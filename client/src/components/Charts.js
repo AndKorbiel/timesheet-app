@@ -11,11 +11,13 @@ export default class Charts extends React.Component {
             Object.entries(value).map(([innerKey, innerValue]) => {
                 return (
                     val.push({date: this.props.translations.months[parseInt(innerKey - 1)] + ', ' + key,
-                        value: this.props.calculateMonthTotalPages(innerKey, innerValue)})
+                        value: this.props.calculateMonthTotalPages(innerKey, innerValue),
+                        index: innerKey})
                 )
             })
 
         })
+
         return val;
     }
 

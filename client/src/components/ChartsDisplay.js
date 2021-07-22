@@ -9,7 +9,6 @@ export default class ChartsDisplay extends React.Component {
     }
 
     generateChart = data => {
-        console.log(data)
         const width = 1400;
         const height = 450;
 
