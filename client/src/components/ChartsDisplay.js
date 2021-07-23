@@ -44,17 +44,28 @@ export default class ChartsDisplay extends React.Component {
         const yAxis = (g) => {
             g.attr("transform", `translate(${margin.left}, 0)`)
                 .call(d3.axisLeft(y).ticks(null, data.value))
-                .attr("font-size", '20px')
+                .attr("font-size", '14px')
         }
 
         const xAxis = (g) => {
             g.attr("transform", `translate(0,${height - margin.bottom})`)
                 .call(d3.axisBottom(x).tickFormat(i => data[i].date))
-                .attr("font-size", '20px')
+                .attr("font-size", '14px')
         }
 
         svg.append("g").call(xAxis);
         svg.append("g").call(yAxis);
+
+        svg.selectAll("text.bar")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("text-anchor", "middle")
+            .attr("x", (d, i) => x(i) + x.bandwidth() / 2)
+            .attr("y", function(d) { return y(d.value) - 5; })
+            .text(function(d) {
+                return d.value;
+            })
     }
 
     render() {
