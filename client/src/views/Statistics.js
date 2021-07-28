@@ -17,7 +17,6 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-
 class Statistics extends React.Component {
     state = {
         data: []
@@ -160,7 +159,6 @@ class Statistics extends React.Component {
             filtered[key] = temp
         }
 
-
         for (let [key, value] of Object.entries(filtered)) {
             for (let [innerKey, innerValue] of Object.entries(value)) {
                 if (innerValue.length === 0) {
@@ -201,9 +199,6 @@ class Statistics extends React.Component {
         }
 
         const state = {filters: filters, tsList: filtered};
-
-        console.log(filtered)
-
         return state
     }
 

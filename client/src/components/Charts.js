@@ -18,7 +18,7 @@ export default class Charts extends React.Component {
 
         })
 
-        return val;
+        return val.filter((el, index) => index < 12);
     }
 
     generateDataForDayStats = data => {
@@ -34,7 +34,7 @@ export default class Charts extends React.Component {
             })
         })
 
-        return val;
+        return val.filter((el, index) => index < 14);
     }
 
     render() {
@@ -42,11 +42,13 @@ export default class Charts extends React.Component {
             <div>
                 <ChartsDisplay
                     data={this.generateDataForMonthStats(this.props.data)}
-                    title="Pages per month"
+                    title={this.props.translations.p_per_month}
+                    sorting="value"
                 />
                 <ChartsDisplay
                     data={this.generateDataForDayStats(this.props.data)}
-                    title="Pages per day"
+                    title={this.props.translations.p_per_day}
+                    sorting="date"
                 />
             </div>
         )

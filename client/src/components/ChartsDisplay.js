@@ -5,17 +5,17 @@ export default class ChartsDisplay extends React.Component {
     myRef = React.createRef();
 
     componentDidMount = () => {
-        this.generateChart(this.props.data)
+        this.generateChart(this.props.data, this.props.sorting)
     }
 
-    generateChart = data => {
+    generateChart = (data, sorting) => {
         const width = 1400;
         const height = 450;
 
         const margin = { top: 50, bottom: 50, left: 50, right: 50 };
         const svg = d3.select(this.myRef.current)
             .append('svg')
-            .attr('width', width - margin.left - margin.right)
+            .attr('width', '100%')
             .attr('height', height - margin.top - margin.bottom)
             .attr("viewBox", [0, 0, width, height]);
 
@@ -28,17 +28,24 @@ export default class ChartsDisplay extends React.Component {
             .domain([0, (d3.max(data.map(function(d) { return Math.round(d.value) })) + 10 )])
             .range([height - margin.bottom, margin.top])
 
+        const colors = d3.scaleLinear()
+            .domain([0, data.length * .33, data.length * .66, data.length])
+            .range(['#5A7112', '#789227', '#97B43D','#B5D552'])
+
         svg
             .append("g")
-            .attr("fill", 'royalblue')
+
             .selectAll("rect")
-            .data(data.sort((a, b) => d3.descending(a.value, b.value)))
+            .data(data.sort((a, b) => d3.descending(a[sorting], b[sorting])))
             .join("rect")
             .attr("x", (d, i) => x(i))
             .attr("y", d => y(d.value))
             .attr('title', (d) => d.value)
             .attr("class", "rect")
             .attr("height", d => y(0) - y(d.value))
+            .attr("fill", function(d, i) {
+                return colors(i);
+            })
             .attr("width", x.bandwidth());
 
         const yAxis = (g) => {

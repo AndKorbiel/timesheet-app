@@ -43,7 +43,9 @@ export const translations = {
         calculator_label: 'Paste or start typing here',
         calculator_label_pages: 'Pages:',
         calculator_label_chars: 'Characters:',
-        calculator_label_clear: 'Clear'
+        calculator_label_clear: 'Clear',
+        p_per_month: 'Pages per month (latest 12 months)',
+        p_per_day: 'Pages per day (latest 14 days)'
     },
     Polski: {
         home_page_title: 'Witamy w aplikacji do Timesheetów',
@@ -89,6 +91,8 @@ export const translations = {
         calculator_label: 'Tutaj wklej lub wprowadź tekst',
         calculator_label_pages: 'Stron:',
         calculator_label_chars: 'Znaków:',
-        calculator_label_clear: 'Wyczyść'
+        calculator_label_clear: 'Wyczyść',
+        p_per_month: 'Strony na miesiąc (ostatnie 12 miesięcy)',
+        p_per_day: 'Strony na dzień (ostatnie 2 tygodnie)'
     }
 }
