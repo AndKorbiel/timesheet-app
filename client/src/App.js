@@ -1,34 +1,28 @@
 import React from 'react';
-import Navbar from "./components/Navbar";
+import Navbar from './components/Navbar';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import './styles/App.scss';
-import LoginForm from "./components/LoginForm";
+import LoginForm from './components/LoginForm';
 
 const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: '#5F758E'
-        },
-        secondary: {
-            main: '#5F758E'
-        }
-    }
+  palette: {
+    primary: {
+      main: '#5F758E',
+    },
+    secondary: {
+      main: '#5F758E',
+    },
+  },
 });
 
-class App extends React.Component {
-    state = {}
-
-    render() {
-        return (
-            <MuiThemeProvider theme={theme}>
-                <div className="App">
-                    <Navbar />
-                    <LoginForm />
-                </div>
-            </MuiThemeProvider>
-        );
-    }
-}
+const App = () => (
+  <MuiThemeProvider theme={theme}>
+    <div className="App">
+      <Navbar />
+      <LoginForm />
+    </div>
+  </MuiThemeProvider>
+);
 
 export default App;

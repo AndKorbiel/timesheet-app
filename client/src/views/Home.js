@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import TimeSheetInputForm from '../components/TimeSheetInputForm';
 
-function Home(props) {
+function Home() {
   const { isLoggedIn, translations } = useSelector((state) => ({
     isLoggedIn: state.isLoggedIn,
     translations: state.translations[state.selectedLanguage],
@@ -21,6 +21,7 @@ function Home(props) {
               <h1>{translations.home_page_title}</h1>
               <hr />
               <h2>{translations.home_page_subtitle}</h2>
+
               <TimeSheetInputForm translations={translations} />
             </Paper>
           </Grid>

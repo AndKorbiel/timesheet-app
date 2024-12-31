@@ -5,32 +5,41 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function CustomDialog(props) {
-    return(
-        <Dialog
-            open={props.open}
-            onClose={props.handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-        >
-            <DialogTitle id="alert-dialog-title">
-                {props.title}
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    {props.description}
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                {props.cancelOption &&
-                    <Button onClick={props.handleCancel} color="default" autoFocus>
-                        {props.translations.dialog_cancel}
-                    </Button>
-                }
-                <Button onClick={props.handleClose} color="primary">
-                    {props.translations.dialog_accept}
-                </Button>
-            </DialogActions>
-        </Dialog>
-    )
+export default function CustomDialog({
+  cancelOption,
+  description,
+  handleCancel,
+  handleClose,
+  open,
+  title,
+  translations,
+}) {
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {description}
+        </DialogContentText>
+      </DialogContent>
+
+      <DialogActions>
+        {cancelOption && (
+          <Button onClick={handleCancel} color="default" autoFocus>
+            {translations.dialog_cancel}
+          </Button>
+        )}
+
+        <Button onClick={handleClose} color="primary">
+          {translations.dialog_accept}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 }
